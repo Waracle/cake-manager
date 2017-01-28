@@ -1,6 +1,12 @@
 <html>
 <head>
     <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
 <h1>Cakes</h1>
@@ -15,7 +21,7 @@
         url: '/cakes',
         success: function (json) {
             $.each(json, function (i, cake) {
-                var widget = '<ul><li>' + cake.title + '</li><li>' + cake.description + '</li><li>' + cake.image + '</li></ul>';
+                var widget = '<ul><li>' + cake.title + '</li><li>' + cake.description + '</li><li><img src="' + cake.image + '"/></li></ul>';
                 $("#cakes").append(widget);
             });
         }
