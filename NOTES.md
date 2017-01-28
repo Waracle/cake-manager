@@ -35,7 +35,7 @@ Notes from reviewing the existing solution:
         * Consider adopting a logging library and refactoring out println() calls
         * How trustworthy is this json data source, could it be compromised
           (or could your call be intercepted) to return infinite data and consume
-          your entire JVM heap? Potential DOS attack vector.
+          your entire JVM heap? Potential DOS attack vector. Potenial for poisoning.
         * Good use of try-with-resources, *thumbs up emoji*
         * The logging strategy used here isn't going to help identify many common
           production type issues. E.g. say the app's connection on the DB is
@@ -53,4 +53,3 @@ Notes from reviewing the existing solution:
         * Manual serialisation is error prone not to mention low value, jackson
           is already a project dependency, consider using that instead
         * The response will not be valid json - missing "," between list items
-        
