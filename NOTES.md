@@ -54,6 +54,16 @@ Notes from reviewing the existing solution:
           is already a project dependency, consider using that instead
         * The response will not be valid json - missing "," between list items
         
+    CakeEntity.java:
+        * Use of depricated @Entity, consider replacing with @DynamicUpdate
+        * Unconventional db <-> class field mappings, looks like copy-pasta
+         * Table called "Employee" for class "CakeEntity"
+         * Column "EMAIL" used for field "title"
+         * etc. etc.
+        * Surrogate key field is named "employeeId"
+        * Don't use both @UniqueConstraint and @Column(unique=true)
+        * It's ok to depend on hibernate provided equals() and hashCode() here *thumbs up emoji*
+        
     pom.xml:
         * URL field isn't accurate
         * Old version specified for junit, typo?
