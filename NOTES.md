@@ -64,3 +64,6 @@ Notes from reviewing the existing solution:
         * Consider extracting the literal version numbers to property fields to
           make life better for future hackers on this code
 
+    index.jsp:
+        * Not used, remove?
+        * Use a doc type, try to avoid quirks mode rendering where possible
