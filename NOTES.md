@@ -81,3 +81,10 @@ Notes from reviewing the existing solution:
     Web.xml:
         * 2.3 must be a typo here since 3.0 is specified in the reqs and 3.1 is
           adopted in the POM already
+
+# Fix The Existing Code #
+
+I used AngularJS style commit messages (can be handy for tools like git bisect).
+
+https://github.com/CraigJPerry/cake-manager/commits/interview-assessment
+
