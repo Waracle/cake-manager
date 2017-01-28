@@ -58,4 +58,9 @@ Notes from reviewing the existing solution:
         * URL field isn't accurate
         * Old version specified for junit, typo?
         * No version specified for jetty plugin
+        * The commentary is redundant - It's usually better to answering the
+          question "Why?" in comments like this since the reader can already see
+          the "What"
+        * Consider extracting the literal version numbers to property fields to
+          make life better for future hackers on this code
 
