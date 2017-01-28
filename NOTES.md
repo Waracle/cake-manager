@@ -84,7 +84,10 @@ Notes from reviewing the existing solution:
 
 # Fix The Existing Code #
 
-I used AngularJS style commit messages (can be handy for tools like git bisect).
+I used AngularJS style of commit messages (can be handy for tools like git bisect).
 
 https://github.com/CraigJPerry/cake-manager/commits/interview-assessment
 
+# Implement The Features #
+
+All the requirements have been satisfied.
