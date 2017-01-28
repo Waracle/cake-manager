@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-@WebServlet("/cakes")
+@WebServlet({"", "/cakes"})
 public class CakeServlet extends HttpServlet {
 
     @Override
