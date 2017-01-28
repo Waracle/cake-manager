@@ -53,3 +53,9 @@ Notes from reviewing the existing solution:
         * Manual serialisation is error prone not to mention low value, jackson
           is already a project dependency, consider using that instead
         * The response will not be valid json - missing "," between list items
+        
+    pom.xml:
+        * URL field isn't accurate
+        * Old version specified for junit, typo?
+        * No version specified for jetty plugin
+
