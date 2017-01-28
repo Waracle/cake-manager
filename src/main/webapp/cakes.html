@@ -11,6 +11,15 @@
 <body>
 <h1>Cakes</h1>
 <div id="cakes"></div>
+<form>
+    <label for="title">Title:</label>
+    <input id="title" name="title" type="text"/>
+    <label for="description">Description:</label>
+    <input id="description" name="description" type="text"/>
+    <label for="image">Image:</label>
+    <input id="image" name="image" type="text"/>
+    <input type="submit" value="Add Cake" />
+</form>
 
 <script>
     $.ajax({
@@ -26,6 +35,14 @@
             });
         }
     });
+    $('form').submit(function (evt) {
+        $.ajax({
+            url: '/cakes',
+            data: $('form').serialize(),
+            processData: false,
+            type: 'PUT'
+        });
+    })
 </script>
 <noscript>This page requires javascript to be enabled. Please contact Craig J Perry...</noscript>
 </body>

@@ -2,6 +2,7 @@ package com.waracle.cakemgr;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,6 +39,23 @@ public class CakeServlet extends HttpServlet {
             RequestDispatcher view = req.getRequestDispatcher("/cakes.html");
             view.forward(req, resp);
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // De-serialise
+        CakeEntity c = new CakeEntity();
+        c.setTitle(req.getParameter("title"));
+        c.setDescription(req.getParameter("description"));
+        c.setImage(req.getParameter("image"));
+
+        // Persist
+        // TODO - move this to a Repository layer and the orchestration to a controller
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.persist(c);
+        transaction.commit();
+        session.close();
     }
 
 }
