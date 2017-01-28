@@ -10,5 +10,5 @@ or have the servlet respond for both.
 
 RESTful CRUD service with JSON & HTML content types:
 * GET / -> redirect to /cakes (or just mount the servlet at both / and /cakes?)
-* GET /cakes -> HTML list of cakes, with form to add cakes
-* GET /cakes -> JSON list of cakes
+* GET /cakes [Accepts: text/html] -> HTML list of cakes, with form to add cakes
+* GET /cakes [Accepts: application/json] -> JSON list of cakes
