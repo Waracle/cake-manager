@@ -3,6 +3,7 @@ package com.waracle.cakemgr;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -11,7 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
@@ -83,24 +87,10 @@ public class CakeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
 
-        resp.getWriter().println("[");
-
-        for (CakeEntity entity : list) {
-            resp.getWriter().println("\t{");
-
-            resp.getWriter().println("\t\t\"title\" : " + entity.getTitle() + ", ");
-            resp.getWriter().println("\t\t\"desc\" : " + entity.getDescription() + ",");
-            resp.getWriter().println("\t\t\"image\" : " + entity.getImage());
-
-            resp.getWriter().println("\t}");
-        }
-
-        resp.getWriter().println("]");
-
+        new ObjectMapper().writeValue(resp.getOutputStream(), list);
     }
 
 }
