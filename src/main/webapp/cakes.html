@@ -1,0 +1,26 @@
+<html>
+<head>
+    <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<h1>Cakes</h1>
+<div id="cakes"></div>
+
+<script>
+    $.ajax({
+        beforeSend: function (request) {
+            request.setRequestHeader("Accept", 'application/json');
+        },
+        dataType: "json",
+        url: '/cakes',
+        success: function (json) {
+            $.each(json, function (i, cake) {
+                var widget = '<ul><li>' + cake.title + '</li><li>' + cake.description + '</li><li>' + cake.image + '</li></ul>';
+                $("#cakes").append(widget);
+            });
+        }
+    });
+</script>
+<noscript>This page requires javascript to be enabled. Please contact Craig J Perry...</noscript>
+</body>
+</html>

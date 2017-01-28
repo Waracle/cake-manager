@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -87,10 +88,14 @@ public class CakeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
-
-        new ObjectMapper().writeValue(resp.getOutputStream(), list);
+        if (req.getHeader("Accept").contains("json")) {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
+            new ObjectMapper().writeValue(resp.getOutputStream(), list);
+        } else {
+            RequestDispatcher view = req.getRequestDispatcher("/cakes.html");
+            view.forward(req, resp);
+        }
     }
 
 }
