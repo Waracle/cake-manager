@@ -67,3 +67,7 @@ Notes from reviewing the existing solution:
     index.jsp:
         * Not used, remove?
         * Use a doc type, try to avoid quirks mode rendering where possible
+    
+    Web.xml:
+        * 2.3 must be a typo here since 3.0 is specified in the reqs and 3.1 is
+          adopted in the POM already
