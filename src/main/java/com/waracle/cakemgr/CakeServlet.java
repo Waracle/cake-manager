@@ -100,6 +100,7 @@ public class CakeServlet extends HttpServlet {
         }
 
         resp.getWriter().println("]");
+        session.close();
 
     }
 
