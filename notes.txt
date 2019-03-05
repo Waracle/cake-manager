@@ -1,0 +1,66 @@
+Changes:
+
+CakeEntity (amended)
+  - rename as simply Cake
+  - remove references to Employee
+  - add JsonProperty annotation for description field deserialization
+
+CakeFactory (added)
+  - class added for use when creating cakes
+
+CakeServlet (amended)
+  - fix servlet mappings so servlet runs on "/" and "/cakes" and set so it is initialised on startup
+  - replace System out with Logger (using Logback)
+  - add package private constructor which accepts class dependencies, and no-arg constructor creating class with default version of dependencies
+  - refactor init method so initial cakes are deserialized using jackson, and stored in database using CakeStore class (new)
+  - amend doGet method to check accept header and return JSON / HTML depending on presence of "application/json" value
+  - add doPost method, which uses the CakeFactory to make a cake and the CakeStore to persist it, then simply runs the doGet method to render suitable output to the user
+  - add destroy method to close the Hibernate session on closure
+
+CakeStore (added)
+  - added method for retrieving all cakes from the database
+  - added method for storing individual cakes to the database
+  - rather than living with lots of exceptions when duplicate titles are inserted, check for these in advance and if they are found then update the cake
+
+HibernateUtil
+  - make class final
+  - add private constructor
+
+src/main/resources/initial-cakes.json (added)
+  - copy of the json file previously pulled from github.  Held locally to speed up testing, and allow webapp to function without web connection
+
+src/main/resources/logback.xml (added)
+  - added to provide some basic configuration of the log output
+
+src/main/webapp/css/narrow-jumbortron.css (added)
+  - copied from bootstrap.com, used for presentation
+
+src/main/webapp/WEB-INF/web.xml (amended)
+  - fixed web-app tag
+
+src/main/webapp/index.jsp (amended)
+  - changed to present the output in a user friendly manner.  Not entirely happy with the look/responsiveness of this but couldnt afford to spend more time on it
+
+CakeFactoryTest (added)
+  - junit tests for the CakeFactory
+
+CakeServletTest (added)
+  - junit tests for the CakeServlet
+
+CakeStoreTest (new)
+  - junit tests for the CakeStore
+
+pom.xml (amended)
+  - changed jackson-core to jackson-databind, and updated version
+  - add slf4j-api and logback-classic
+  - change junit version to 4.12
+  - add mockito and hamcrest
+
+Areas where further work might be done if time allowed
+  - add cucumber acceptance test / some kind of UI test
+  - use some means of object creation / dependency injection such as spring
+  - use a NoSQL DB such as MongoDB rather than HSQL
+    - personal dislike for the HibernateUtil singleton as it makes junit testing difficult
+    - allow json to be written / retrieved direct from database
+  - more work on presentation
+  - potentially rewrite using Node / Mongoose / React / Mongodb
