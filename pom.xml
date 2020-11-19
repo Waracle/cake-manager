@@ -3,24 +3,51 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.waracle</groupId>
   <artifactId>cake-manager</artifactId>
-  <packaging>war</packaging>
+<!--  <packaging>war</packaging>-->
   <version>1.0-SNAPSHOT</version>
   <name>cake-manager Maven Webapp</name>
   <url>http://maven.apache.org</url>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
   <dependencies>
 
       <!-- Servlet -->
+<!--      <dependency>-->
+<!--          <groupId>javax.servlet</groupId>-->
+<!--          <artifactId>javax.servlet-api</artifactId>-->
+<!--          <version>3.1.0</version>-->
+<!--      </dependency>-->
+
       <dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-          <version>3.1.0</version>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
       </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.junit.vintage</groupId>
+                  <artifactId>junit-vintage-engine</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
 
       <!-- JSON -->
       <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-core</artifactId>
-          <version>2.8.0</version>
+          <version>2.11.3</version>
       </dependency>
 
       <!-- JPA -->
@@ -48,30 +75,30 @@
   </dependencies>
   <build>
     <finalName>cake-manager</finalName>
-    <plugins>
+<!--    <plugins>-->
 
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
+<!--        <plugin>-->
+<!--            <artifactId>maven-compiler-plugin</artifactId>-->
+<!--            <version>2.3.2</version>-->
+<!--            <configuration>-->
+<!--                <source>1.8</source>-->
+<!--                <target>1.8</target>-->
+<!--            </configuration>-->
+<!--        </plugin>-->
 
-        <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-                <scanIntervalSeconds>10</scanIntervalSeconds>
-                <stopKey>STOP</stopKey>
-                <stopPort>8005</stopPort>
-                <httpConnector>
-                    <port>8282</port>
-                </httpConnector>
-            </configuration>
-        </plugin>
+<!--        <plugin>-->
+<!--            <groupId>org.eclipse.jetty</groupId>-->
+<!--            <artifactId>jetty-maven-plugin</artifactId>-->
+<!--            <configuration>-->
+<!--                <scanIntervalSeconds>10</scanIntervalSeconds>-->
+<!--                <stopKey>STOP</stopKey>-->
+<!--                <stopPort>8005</stopPort>-->
+<!--                <httpConnector>-->
+<!--                    <port>8282</port>-->
+<!--                </httpConnector>-->
+<!--            </configuration>-->
+<!--        </plugin>-->
 
-    </plugins>
+<!--    </plugins>-->
   </build>
 </project>
