@@ -5,24 +5,27 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.waracle.cakemgr.CakeEntity;
 import com.waracle.cakemgr.HibernateUtil;
+import com.waracle.cakemgr.service.DaoService;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletException;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
 public class CakeController {
+
+    @Autowired
+    private DaoService daoService;
 
     @GetMapping("/")
     public List<CakeEntity> getAllCakes(){
@@ -59,17 +62,17 @@ public class CakeController {
                 System.out.println(parser.nextFieldName());
                 cakeEntity.setImage(parser.nextTextValue());
 
-                cakes.add(cakeEntity);
-//                Session session = HibernateUtil.getSessionFactory().openSession();
-//                try {
-//                    session.beginTransaction();
-//                    session.persist(cakeEntity);
-//                    System.out.println("adding cake entity");
-//                    session.getTransaction().commit();
-//                } catch (ConstraintViolationException ex) {
-//
-//                }
-//                session.close();
+
+
+                daoService.add(cakeEntity);
+
+
+                CakeEntity savedCake = daoService.getCake(cakeEntity.getId());
+
+                if (savedCake != null){
+                    cakes.add(savedCake);//unsaved cakes are not displayed
+                }
+
 
                 nextToken = parser.nextToken();
                 System.out.println(nextToken);
