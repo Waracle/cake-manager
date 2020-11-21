@@ -15,10 +15,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
@@ -70,8 +72,19 @@ public class CakeControllerTest {
     }
 
     @Test
-    public void testGetAllCakes_FAIL(){
+    public void testGetAllCakesInvalidUrl_FAIL(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
 
+        // create request
+        HttpEntity request = new HttpEntity(headers);
+
+
+        assertThatExceptionOfType(HttpClientErrorException.class)
+                .isThrownBy(() -> {
+                    // make a request
+                    ResponseEntity<String> response = new RestTemplate().exchange(cakesUrl, HttpMethod.GET, request, String.class);
+                }).withMessageContaining("Request method 'GET' not supported");
     }
 
     @Test
@@ -100,7 +113,22 @@ public class CakeControllerTest {
     }
 
     @Test
-    public void testAddCake_FAIL(){
+    public void testAddCakeWithNullObject_FAIL(){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+
+        // create request
+        HttpEntity request = new HttpEntity(null, headers);
+
+        assertThatExceptionOfType(HttpClientErrorException.class)
+                .isThrownBy(() -> {
+                    // make a request
+                    ResponseEntity<String> response = new RestTemplate().exchange(cakesUrl, HttpMethod.POST, request, String.class);
+
+                }).withMessageContaining("Required request body is missing:");
+
 
     }
 
