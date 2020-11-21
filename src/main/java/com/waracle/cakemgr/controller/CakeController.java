@@ -9,9 +9,7 @@ import com.waracle.cakemgr.service.DaoService;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -62,8 +60,6 @@ public class CakeController {
                 System.out.println(parser.nextFieldName());
                 cakeEntity.setImage(parser.nextTextValue());
 
-
-
                 daoService.add(cakeEntity);
 
 
@@ -87,5 +83,11 @@ public class CakeController {
 
         System.out.println("init finished");
         return cakes;
+    }
+
+    @PostMapping("/cakes")
+    public CakeEntity addCake(@RequestBody CakeEntity cakeEntity){
+        daoService.add(cakeEntity);
+        return cakeEntity;
     }
 }
