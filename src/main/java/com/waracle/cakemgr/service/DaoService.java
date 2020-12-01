@@ -1,15 +1,15 @@
 package com.waracle.cakemgr.service;
 
-import com.waracle.cakemgr.CakeEntity;
+import com.waracle.cakemgr.Cake;
 
 import java.util.List;
 
 public interface DaoService {
 
-    void add(CakeEntity cake);
+    void add(Cake cake);
 
-    CakeEntity getCake(Integer id);
+    Cake getCake(Integer id);
 
-    List<CakeEntity> getAllCakes();
+    List<Cake> getAllCakes();
 
 }

@@ -1,7 +1,7 @@
 package com.waracle.cakemgr.service.impl;
 
 
-import com.waracle.cakemgr.CakeEntity;
+import com.waracle.cakemgr.Cake;
 import com.waracle.cakemgr.HibernateUtil;
 import com.waracle.cakemgr.service.DaoService;
 import org.hibernate.Session;
@@ -13,13 +13,18 @@ import java.util.List;
 @Service
 public class DaoServiceImpl implements DaoService {
 
+    private HibernateUtil hibernateUtil = new HibernateUtil();
+
     @Override
-    public void add(CakeEntity cake) {
-        HibernateUtil hibernateUtil = new HibernateUtil();
+    public void add(Cake cake) {
 
         Session session = hibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
+            System.out.println("before adding cake entity");
+            System.out.println("before title cake entity: "+ cake.getTitle());
+            System.out.println("before desc cake entity: " + cake.getDesc());
+            System.out.println("before image cake entity: " + cake.getImage());
             session.persist(cake);
             System.out.println("adding cake entity");
             session.getTransaction().commit();
@@ -31,15 +36,15 @@ public class DaoServiceImpl implements DaoService {
     }
 
     @Override
-    public CakeEntity getCake(Integer id) {
+    public Cake getCake(Integer id) {
         if (id == null){
             return null;
         }
-        CakeEntity savedCake = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Cake savedCake = null;
+        Session session = hibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            savedCake = (CakeEntity) session.get(CakeEntity.class, id);
+            savedCake = (Cake) session.get(Cake.class, id);
             System.out.println("adding cake entity");
             session.getTransaction().commit();
         } catch (ConstraintViolationException ex) {
@@ -50,7 +55,11 @@ public class DaoServiceImpl implements DaoService {
     }
 
     @Override
-    public List<CakeEntity> getAllCakes() {
-        return null;
+    public List<Cake> getAllCakes() {
+        List<Cake> cakes = null;
+        try(Session session = hibernateUtil.getSessionFactory().openSession()){
+            cakes = session.createQuery("from Cake").list();
+        }
+        return cakes;
     }
 }

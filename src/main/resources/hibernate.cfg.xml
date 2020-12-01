@@ -12,6 +12,6 @@
         <property name="hibernate.connection.password"></property>
         <property name="hibernate.connection.url">jdbc:hsqldb:mem:db</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
-        <mapping class="com.waracle.cakemgr.CakeEntity"></mapping>
+        <mapping class="com.waracle.cakemgr.Cake"></mapping>
     </session-factory>
 </hibernate-configuration>

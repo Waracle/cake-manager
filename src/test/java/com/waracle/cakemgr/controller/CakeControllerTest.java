@@ -1,7 +1,7 @@
 package com.waracle.cakemgr.controller;
 
 
-import com.waracle.cakemgr.CakeEntity;
+import com.waracle.cakemgr.Cake;
 import com.waracle.cakemgr.service.DaoService;
 
 
@@ -92,9 +92,9 @@ public class CakeControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
 
-        CakeEntity cake = new CakeEntity();
+        Cake cake = new Cake();
         cake.setTitle("cake name");
-        cake.setDescription("cake description");
+        cake.setDesc("cake description");
         cake.setImage("url");
 
         // create request

@@ -4,11 +4,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HibernateUtil {
 
-    public HibernateUtil() {
-    }
 
     private static SessionFactory sessionFactory = buildSessionFactory();
 
@@ -19,7 +19,8 @@ public class HibernateUtil {
                 StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
                 serviceRegistryBuilder.applySettings(configuration.getProperties());
                 ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+               /// sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                sessionFactory = new Configuration().configure().buildSessionFactory();
             }
             return sessionFactory;
         } catch (Throwable ex) {

@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
-@Table(name = "CAKE", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "TITLE"), @UniqueConstraint(columnNames = "DESCRIPTION"), @UniqueConstraint(columnNames = "IMAGE")})
-public class CakeEntity implements Serializable {
+//@Table(name = "CAKE", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
+@Table(name = "CAKE")
+public class Cake implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 
@@ -16,11 +16,11 @@ public class CakeEntity implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "TITLE", unique = true, nullable = false, length = 100)
+    @Column(name = "TITLE", unique = false, nullable = false, length = 100)//todo: changed this from being unique temporarily
     private String title;
 
-    @Column(name = "DESCRIPTION", unique = false, nullable = false, length = 100)
-    private String description;
+    @Column(name = "DESC", unique = false, nullable = false, length = 100)
+    private String desc;
 
     @Column(name = "IMAGE", unique = false, nullable = false, length = 300)
     private String image;
@@ -37,12 +37,12 @@ public class CakeEntity implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getImage() {
