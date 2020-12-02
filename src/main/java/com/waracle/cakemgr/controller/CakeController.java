@@ -23,7 +23,7 @@ public class CakeController {
     @Autowired
     private DaoService daoService;
 
-    @GetMapping("/")
+    @GetMapping("/cakes")
     public List<Cake> getAllCakes(){
 
         List<Cake> cakes = new ArrayList<>();

@@ -1,1 +1,56 @@
-<p>cakes works!</p>
+
+<div class="container">
+  <h2>Cakes</h2>
+
+  <form #cakeForm="ngForm" (ngSubmit)="cakeForm.form.valid && add(cake.title, cake.desc, cake.image);" >
+
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" name="cake.title" class="form-control" [(ngModel)]="cake.title" #title="ngModel" placeholder="Please enter title..."
+             [ngClass]="{ 'is-invalid': cakeForm.submitted && title.invalid }" required>
+
+      <div class="invalid-feedback" *ngIf="cakeForm.submitted && title.invalid">
+        <p *ngIf="title.errors.required">Title is required</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" name="cake.desc" class="form-control" [(ngModel)]="cake.desc" #desc="ngModel" placeholder="Please enter description..."
+             [ngClass]="{ 'is-invalid': cakeForm.submitted && desc.invalid }" required>
+
+      <div class="invalid-feedback" *ngIf="cakeForm.submitted && desc.invalid">
+        <p *ngIf="desc.errors.required">Description is required</p>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Image</label>
+      <input type="text" name="cake.image" class="form-control" [(ngModel)]="cake.image" #image="ngModel" placeholder="Please enter image..."
+             [ngClass]="{ 'is-invalid': cakeForm.submitted && image.invalid }" required>
+
+      <div class="invalid-feedback" *ngIf="cakeForm.submitted && image.invalid">
+        <p *ngIf="image.errors.required">Title is required</p>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+
+      <button type="submit">Validate</button>
+      <button type="button" [disabled]="!cakeForm.form.valid" routerLink="/cakes" >Submit</button>
+    </div>
+  </form>
+
+  <h2>Cakes</h2>
+  <ul class="cakes">
+    <li *ngFor="let cake of cakes">
+<!--      <a *ngIf="cake" routerLink="/cakeDetail/{{cake.id}}">-->
+        <span class="badge">{{cake.id}}</span>{{cake.id}}
+<!--      </a>-->
+<!--      <button class="delete" title="delete cake" (click)="delete(cake)">x</button>-->
+    </li>
+  </ul>
+</div>
+
