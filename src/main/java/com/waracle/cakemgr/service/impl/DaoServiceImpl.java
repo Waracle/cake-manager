@@ -8,17 +8,17 @@ import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Service
 public class DaoServiceImpl implements DaoService {
 
-    private HibernateUtil hibernateUtil = new HibernateUtil();
 
     @Override
     public void add(Cake cake) {
 
-        Session session = hibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             System.out.println("before adding cake entity");
@@ -36,12 +36,37 @@ public class DaoServiceImpl implements DaoService {
     }
 
     @Override
+    public Cake getCakeByTitle(String title) {
+        if (title == null){
+            return null;
+        }
+        Cake savedCake = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("from Cake where title = :title");
+            query.setParameter("title", title);
+            List resultList =  query.getResultList();
+            if (!resultList.isEmpty()){
+                savedCake = (Cake) resultList.get(0);
+                System.out.println("get cake by title");
+            }
+
+        } catch (ConstraintViolationException ex) {
+            System.out.println(ex);
+        }
+        session.close();
+        return savedCake;
+    }
+
+
+    @Override
     public Cake getCake(Integer id) {
         if (id == null){
             return null;
         }
         Cake savedCake = null;
-        Session session = hibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             savedCake = (Cake) session.get(Cake.class, id);
@@ -57,9 +82,16 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public List<Cake> getAllCakes() {
         List<Cake> cakes = null;
-        try(Session session = hibernateUtil.getSessionFactory().openSession()){
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
             cakes = session.createQuery("from Cake").list();
         }
         return cakes;
+    }
+
+    @Override
+    public boolean checkCakeAlreadyExists(Cake cake){
+        Cake returnedCake = getCakeByTitle(cake.getTitle());
+
+        return returnedCake!=null;
     }
 }

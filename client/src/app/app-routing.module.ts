@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CakesComponent } from './cakes/cakes.component';
+import { DisplayCakesComponent } from './display-cakes/display-cakes.component';
 
 
 const routes: Routes = [
-  {path:'', redirectTo: '/cakes', pathMatch: 'full'},
-  {path:'cakes', component: CakesComponent}
+  //{path:'', component: CakesComponent},
+  {path:'cakes', component: CakesComponent},
+  {path:'', component: DisplayCakesComponent}
 ];
 
 @NgModule({

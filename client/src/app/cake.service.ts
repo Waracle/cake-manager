@@ -12,7 +12,8 @@ import {MessageService} from './message.service';
 })
 export class CakeService {
 
-private baseUrl = 'http://localhost:8282/';
+private baseUrl = 'http://localhost:8282/api/';
+private displayCakesUrl = this.baseUrl;
 private cakesUrl = this.baseUrl + 'cakes';
 private cakeDetailUrl = this.baseUrl + 'cakeDetail';
 
@@ -21,6 +22,15 @@ private cakeDetailUrl = this.baseUrl + 'cakeDetail';
   };
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
+
+    getSavedCakes(): Observable<Cake[]>{
+      this.messageService.add('CakeService: fetched cakes');
+      return this.http.get<Cake[]>(this.displayCakesUrl)
+      .pipe(
+      tap(_ => this.log('fetched saved cakes')),
+        catchError(this.handleError<Cake[]>('getCakes', []))
+        );
+    }
 
   getCakes(): Observable<Cake[]>{
     this.messageService.add('CakeService: fetched cakes');

@@ -7,12 +7,14 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CakesComponent } from './cakes/cakes.component';
 import { MessagesComponent } from './messages/messages.component';
+import { DisplayCakesComponent } from './display-cakes/display-cakes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CakesComponent,
-    MessagesComponent
+    MessagesComponent,
+    DisplayCakesComponent
   ],
   imports: [
     BrowserModule,

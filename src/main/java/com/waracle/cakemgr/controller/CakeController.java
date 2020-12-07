@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.waracle.cakemgr.Cake;
 import com.waracle.cakemgr.service.DaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -17,14 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin("*")
 public class CakeController {
 
     @Autowired
     private DaoService daoService;
 
+
+    @GetMapping("/")
+    public List<Cake> getSavedCakes() {
+        return daoService.getAllCakes();
+
+    }
+
     @GetMapping("/cakes")
-    public List<Cake> getAllCakes(){
+    public List<Cake> downloadCakes() {
 
         List<Cake> cakes = new ArrayList<>();
         System.out.println("downloading cake json");
@@ -45,7 +54,7 @@ public class CakeController {
             }
 
             JsonToken nextToken = parser.nextToken();
-            while(nextToken == JsonToken.START_OBJECT) {
+            while (nextToken == JsonToken.START_OBJECT) {
                 System.out.println("creating cake entity");
 
                 Cake cakeEntity = new Cake();
@@ -58,15 +67,16 @@ public class CakeController {
                 System.out.println(parser.nextFieldName());
                 cakeEntity.setImage(parser.nextTextValue());
 
-                daoService.add(cakeEntity);
+                boolean isCakeExists = daoService.checkCakeAlreadyExists(cakeEntity);
 
+                if (!isCakeExists) {
+                    daoService.add(cakeEntity);
+                    Cake savedCake = daoService.getCake(cakeEntity.getId());
 
-                Cake savedCake = daoService.getCake(cakeEntity.getId());
-
-                if (savedCake != null){
-                    cakes.add(savedCake);//unsaved cakes are not displayed
+//                    if (savedCake == null) {
+                        cakes.add(savedCake);//unsaved cakes are not displayed
+//                    }
                 }
-
 
                 nextToken = parser.nextToken();
                 System.out.println(nextToken);
@@ -84,8 +94,10 @@ public class CakeController {
     }
 
     @PostMapping("/cakes")
-    public Cake addCake(@RequestBody Cake cakeEntity){
+    public Cake addCake(@RequestBody Cake cakeEntity) {
         daoService.add(cakeEntity);
         return cakeEntity;
     }
+
+
 }

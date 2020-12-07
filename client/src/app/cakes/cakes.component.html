@@ -1,6 +1,6 @@
 
 <div class="container">
-  <h2>Cakes</h2>
+  <h2>Add Cake</h2>
 
   <form #cakeForm="ngForm" (ngSubmit)="cakeForm.form.valid && add(cake.title, cake.desc, cake.image);" >
 
@@ -38,18 +38,17 @@
 
     <div class="form-group">
 
-      <button type="submit">Validate</button>
-      <button type="button" [disabled]="!cakeForm.form.valid" routerLink="/cakes" >Submit</button>
+      <button type="submit">Add Cake</button>
     </div>
   </form>
 
-  <h2>Cakes</h2>
+
+  <h2>Downloaded Cakes</h2>
   <ul class="cakes">
     <li *ngFor="let cake of cakes">
-<!--      <a *ngIf="cake" routerLink="/cakeDetail/{{cake.id}}">-->
-        <span class="badge">{{cake.id}}</span>{{cake.id}}
-<!--      </a>-->
-<!--      <button class="delete" title="delete cake" (click)="delete(cake)">x</button>-->
+        <span class="badge">{{cake.id}}</span>{{cake.title}}
+      <span >{{cake.desc}}</span>
+      <span >{{cake.image}}</span>
     </li>
   </ul>
 </div>

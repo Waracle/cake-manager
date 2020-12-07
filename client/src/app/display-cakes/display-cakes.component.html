@@ -1,0 +1,12 @@
+
+<div class="container">
+  <h2>Saved Cakes</h2>
+
+  <ul class="cakes">
+    <li *ngFor="let cake of cakes">
+      <span class="badge">{{cake.id}}</span>{{cake.title}}
+      <span >{{cake.desc}}</span>
+      <span >{{cake.image}}</span>
+    </li>
+  </ul>
+</div>

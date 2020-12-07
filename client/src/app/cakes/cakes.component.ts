@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cake } from '../cake';
 import { CakeService } from '../cake.service';
+import { AppModuleService } from '../app-module.service';
 
 
 @Component({
@@ -11,14 +12,24 @@ import { CakeService } from '../cake.service';
 export class CakesComponent implements OnInit {
   cake = new Cake();
   cakes : Cake[];
+  savedCakes : Cake[];
+  //visible = false;
 
-  constructor(private cakeService: CakeService) { }
+  constructor(private cakeService: CakeService, private appModuleService: AppModuleService) { }
 
   ngOnInit(): void {
-    this.getCakes();
+  //this.appModuleService.setVisible(false);
+  //console.log('cakes component isVisible: '+ this.appModuleService.isVisible());
+  this.getAllCakes();
+    this.downloadCakes();
   }
 
- getCakes():void{
+  getAllCakes(){
+    this.cakeService.getSavedCakes()
+        .subscribe(savedCakes => this.savedCakes = savedCakes);
+  }
+
+ downloadCakes():void{
     this.cakeService.getCakes()
     .subscribe(cakes => this.cakes = cakes);
   }
