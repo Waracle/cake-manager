@@ -1,0 +1,47 @@
+.cakes {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.cakes li {
+  position: relative;
+  cursor: pointer;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+}
+
+.cakes li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+.cakes a {
+  color: #001580;
+  text-decoration: none;
+  position: relative;
+  display: block;
+  width: 250px;
+}
+
+.cakes a:hover {
+  color:#607D8B;
+}
+
+button {
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+  font-family: Arial;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
