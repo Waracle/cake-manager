@@ -31,7 +31,7 @@
              [ngClass]="{ 'is-invalid': cakeForm.submitted && image.invalid }" required>
 
       <div class="invalid-feedback" *ngIf="cakeForm.submitted && image.invalid">
-        <p *ngIf="image.errors.required">Title is required</p>
+        <p *ngIf="image.errors.required">Image is required</p>
       </div>
     </div>
 
@@ -42,14 +42,27 @@
     </div>
   </form>
 
+  <hr>
 
   <h2>Downloaded Cakes</h2>
-  <ul class="cakes">
-    <li *ngFor="let cake of cakes">
-        <span class="badge">{{cake.id}}</span>{{cake.title}}
-      <span >{{cake.desc}}</span>
-      <span >{{cake.image}}</span>
-    </li>
-  </ul>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cake of cakes">
+      <td>{{cake.id}}</td>
+      <td>{{cake.title}}</td>
+      <td>{{cake.desc}}</td>
+      <td><a>{{cake.image}}</a></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 

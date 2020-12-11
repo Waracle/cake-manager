@@ -31,11 +31,13 @@ public class CakeControllerTest {
     @LocalServerPort
     private int port;
 
-    private String baseUrlString;
+    private String invalidCakesUrl;
 
-    private URL base;
+    private URL baseUrl;
 
     private String cakesUrl;
+
+    private String displayCakesUrl;
 
     @Autowired
     private TestRestTemplate template;
@@ -46,9 +48,10 @@ public class CakeControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception{
-        this.base = new URL("http://localhost:" + port + "/");
-        this.baseUrlString = "http://localhost:" + port + "/";
-        this.cakesUrl = baseUrlString+"cakes";
+        this.baseUrl = new URL("http://localhost:" + port + "/api");
+        this.displayCakesUrl = baseUrl+"/";
+        this.invalidCakesUrl = "http://localhost:" + port + "/cakes";
+        this.cakesUrl = baseUrl +"/cakes";
     }
 
     @Test
@@ -60,7 +63,7 @@ public class CakeControllerTest {
         HttpEntity request = new HttpEntity(headers);
 
         // make a request
-        ResponseEntity<String> response = new RestTemplate().exchange(baseUrlString, HttpMethod.GET, request, String.class);
+        ResponseEntity<String> response = new RestTemplate().exchange(cakesUrl, HttpMethod.GET, request, String.class);
 
         // get JSON response
         String jsonBodyResponse = response.getBody();
@@ -83,8 +86,8 @@ public class CakeControllerTest {
         assertThatExceptionOfType(HttpClientErrorException.class)
                 .isThrownBy(() -> {
                     // make a request
-                    ResponseEntity<String> response = new RestTemplate().exchange(cakesUrl, HttpMethod.GET, request, String.class);
-                }).withMessageContaining("Request method 'GET' not supported");
+                    ResponseEntity<String> response = new RestTemplate().exchange(invalidCakesUrl, HttpMethod.GET, request, String.class);
+                }).withMessageContaining("404");
     }
 
     @Test
@@ -113,6 +116,38 @@ public class CakeControllerTest {
     }
 
     @Test
+    public void testDisplayCakes_SUCCESS(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        Cake cake = new Cake();
+        cake.setTitle("cake name");
+        cake.setDesc("cake description");
+        cake.setImage("url");
+
+        // create request
+        HttpEntity postRequest = new HttpEntity(cake, headers);
+
+        // make a request
+        ResponseEntity<String> postResponse = new RestTemplate().exchange(cakesUrl, HttpMethod.POST, postRequest, String.class);
+
+
+        // create request
+        HttpEntity request = new HttpEntity(headers);
+
+        // make a request
+        ResponseEntity<String> response = new RestTemplate().exchange(displayCakesUrl, HttpMethod.GET, request, String.class);
+
+        // get JSON response
+        String jsonBodyResponse = response.getBody();
+
+        assertNotNull("Response should not be null", response);
+        assertNotNull("json body should not be null", jsonBodyResponse);
+        assertTrue(jsonBodyResponse.contains("cake description"));
+
+    }
+
+    @Test
     public void testAddCakeWithNullObject_FAIL(){
 
         HttpHeaders headers = new HttpHeaders();
@@ -128,8 +163,6 @@ public class CakeControllerTest {
                     ResponseEntity<String> response = new RestTemplate().exchange(cakesUrl, HttpMethod.POST, request, String.class);
 
                 }).withMessageContaining("Required request body is missing:");
-
-
     }
 
 }

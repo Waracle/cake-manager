@@ -14,6 +14,8 @@ public interface DaoService {
 
     List<Cake> getAllCakes();
 
+    void deleteCake(Cake cake);
+
     boolean checkCakeAlreadyExists(Cake cake);
 
 }

@@ -1,118 +1,93 @@
 package com.waracle.cakemgr.service.impl;
 
 
-import com.waracle.cakemgr.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.waracle.cakemgr.Cake;
+import com.waracle.cakemgr.service.DaoService;
+
+import org.junit.jupiter.api.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.springframework.test.util.AssertionErrors.assertNotNull;
+import static org.springframework.test.util.AssertionErrors.assertNull;
 
 
+@SpringBootTest
 public class DaoServiceImplTest {
 
-    private static SessionFactory sessionFactory;
-    private Session session;
-
-    @BeforeAll
-    public static void setup() {
-        sessionFactory = HibernateUtil.getSessionFactory();
-        System.out.println("SessionFactory created");
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        if (sessionFactory != null) sessionFactory.close();
-        System.out.println("SessionFactory destroyed");
-    }
-
-    @BeforeEach
-    public void openSession() {
-        session = sessionFactory.openSession();
-        System.out.println("Session created");
-    }
-
-    @AfterEach
-    public void closeSession() {
-        if (session != null) session.close();
-        System.out.println("Session closed\n");
-    }
+    @Autowired
+    private DaoService daoService;
 
     @Test
     public void testAddCake_SUCCESS(){
+        Cake cake = createCake("title", "desc", "image");
 
+        daoService.add(cake);
+
+        Cake savedCake = daoService.getCakeByTitle("title");
+        assertNotNull("Response should not be null", savedCake);
+        assertEquals(cake.getTitle(), savedCake.getTitle());
+        assertEquals(cake.getDesc(), savedCake.getDesc());
+        assertEquals(cake.getImage(), savedCake.getImage());
+
+        daoService.deleteCake(savedCake);
+        assertNull("Cake should be null", daoService.getCakeByTitle("title"));
     }
 
     @Test
-    public void testAddCake_FAIL(){
+    public void testGetAllCakes_SUCCESS(){
+        Cake cake1 = createCake("title1", "desc1", "image1");
+        Cake cake2 = createCake("title2", "desc2", "image2");
 
-    }
+        daoService.add(cake1);
+        daoService.add(cake2);
 
-    @Test
-    public void testListCakes_SUCCESS(){
+        List<Cake> cakes = daoService.getAllCakes();
+        assertEquals(2, cakes.size());
+        assertEquals(cakes.get(0).getTitle(), "title1");
+        assertEquals(cakes.get(0).getDesc(), "desc1");
+        assertEquals(cakes.get(0).getImage(), "image1");
 
-    }
+        assertEquals(cakes.get(1).getTitle(), "title2");
+        assertEquals(cakes.get(1).getDesc(), "desc2");
+        assertEquals(cakes.get(1).getImage(), "image2");
 
-    @Test
-    public void testListCakes_FAIL(){
 
+        daoService.deleteCake(cakes.get(0));
+        daoService.deleteCake(cakes.get(1));
+        assertNull("Cake should be null", daoService.getCakeByTitle("title1"));
+        assertNull("Cake should be null", daoService.getCakeByTitle("title2"));
     }
 
     @Test
     public void testGetCake_SUCCESS(){
+        Cake cake1 = createCake("title1", "desc1", "image1");
+
+        daoService.add(cake1);
+
+        Cake savedCake = daoService.getCakeByTitle("title1");
+
+        assertEquals(savedCake.getTitle(), "title1");
+        assertEquals(savedCake.getDesc(), "desc1");
+        assertEquals(savedCake.getImage(), "image1");
+
+        daoService.deleteCake(savedCake);
+        assertNull("Cake should be null", daoService.getCakeByTitle("title1"));
 
     }
 
-    @Test
-    public void testGetCake_FAIL(){
-
+    private Cake createCake(String title, String desc, String image){
+        Cake cake = new Cake();
+        cake.setTitle(title);
+        cake.setDesc(desc);
+        cake.setImage(image);
+        return cake;
     }
-
-//    @Override
-//    public void add(CakeEntity cake) {
-//
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        try {
-//            session.beginTransaction();
-//            session.persist(cake);
-//            System.out.println("adding cake entity");
-//            session.getTransaction().commit();
-//        } catch (ConstraintViolationException ex) {
-//            System.out.println(ex);
-//        }
-//        session.close();
-//
-//    }
-//
-//    @Override
-//    public CakeEntity getCake(Integer id) {
-//        if (id == null){
-//            return null;
-//        }
-//        CakeEntity savedCake = null;
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        try {
-//            session.beginTransaction();
-//            savedCake = (CakeEntity) session.get(CakeEntity.class, id);
-//            System.out.println("adding cake entity");
-//            session.getTransaction().commit();
-//        } catch (ConstraintViolationException ex) {
-//            System.out.println(ex);
-//        }
-//        session.close();
-//        return savedCake;
-//    }
-//
-//    @Override
-//    public List<CakeEntity> getAllCakes() {
-//        List<CakeEntity> cakes = null;
-//        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-//            cakes = session.createQuery("from Cake").list();
-//        }
-//        return cakes;
-//    }
 
 }

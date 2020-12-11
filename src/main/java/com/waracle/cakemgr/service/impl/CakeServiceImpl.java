@@ -42,14 +42,14 @@ public class CakeServiceImpl implements CakeService {
             System.out.println(parser.nextFieldName());
             cake.setImage(parser.nextTextValue());
 
-
-
             boolean isCakeExists = daoService.checkCakeAlreadyExists(cake);
-
+            Cake savedCake = null;
             if (!isCakeExists) {
                 daoService.add(cake);
-                Cake savedCake = daoService.getCake(cake.getId());
+            }
+             savedCake = daoService.getCakeByTitle(cake.getTitle());
 
+            if (!cakes.contains(savedCake)){
                 cakes.add(savedCake);
             }
 
@@ -59,8 +59,6 @@ public class CakeServiceImpl implements CakeService {
             nextToken = parser.nextToken();
             System.out.println(nextToken);
         }
-
-
         return cakes;
     }
 }

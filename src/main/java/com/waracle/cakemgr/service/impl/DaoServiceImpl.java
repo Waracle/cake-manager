@@ -17,9 +17,7 @@ public class DaoServiceImpl implements DaoService {
 
     @Override
     public void add(Cake cake) {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             System.out.println("before adding cake entity");
             System.out.println("before title cake entity: "+ cake.getTitle());
@@ -31,7 +29,7 @@ public class DaoServiceImpl implements DaoService {
         } catch (ConstraintViolationException ex) {
             System.out.println(ex);
         }
-        session.close();
+
 
     }
 
@@ -41,8 +39,7 @@ public class DaoServiceImpl implements DaoService {
             return null;
         }
         Cake savedCake = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("from Cake where title = :title");
             query.setParameter("title", title);
@@ -55,7 +52,6 @@ public class DaoServiceImpl implements DaoService {
         } catch (ConstraintViolationException ex) {
             System.out.println(ex);
         }
-        session.close();
         return savedCake;
     }
 
@@ -66,8 +62,8 @@ public class DaoServiceImpl implements DaoService {
             return null;
         }
         Cake savedCake = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             savedCake = (Cake) session.get(Cake.class, id);
             System.out.println("adding cake entity");
@@ -75,7 +71,6 @@ public class DaoServiceImpl implements DaoService {
         } catch (ConstraintViolationException ex) {
             System.out.println(ex);
         }
-        session.close();
         return savedCake;
     }
 
@@ -89,9 +84,19 @@ public class DaoServiceImpl implements DaoService {
     }
 
     @Override
-    public boolean checkCakeAlreadyExists(Cake cake){
-        Cake returnedCake = getCakeByTitle(cake.getTitle());
+    public void deleteCake(Cake cake) {
 
-        return returnedCake!=null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            session.beginTransaction();
+            session.delete(cake);
+            System.out.println("deleting cake with id");
+            session.getTransaction().commit();
+        }
+
+    }
+
+    @Override
+    public boolean checkCakeAlreadyExists(Cake cake){
+        return getCakeByTitle(cake.getTitle()) !=null;
     }
 }

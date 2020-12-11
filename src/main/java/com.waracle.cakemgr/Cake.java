@@ -1,6 +1,7 @@
 package com.waracle.cakemgr;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -53,4 +54,19 @@ public class Cake implements Serializable {
         this.image = image;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cake cake = (Cake) o;
+        return Objects.equals(title, cake.title) &&
+                Objects.equals(desc, cake.desc) &&
+                Objects.equals(image, cake.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, desc, image);
+    }
 }
