@@ -2,7 +2,7 @@ package com.waracle.cakemgr.service.impl;
 
 
 
-import com.waracle.cakemgr.Cake;
+import com.waracle.cakemgr.entity.Cake;
 import com.waracle.cakemgr.service.DaoService;
 
 import org.junit.jupiter.api.*;

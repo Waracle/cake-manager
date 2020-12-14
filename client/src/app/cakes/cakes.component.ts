@@ -13,21 +13,13 @@ export class CakesComponent implements OnInit {
   cake = new Cake();
   cakes : Cake[];
   savedCakes : Cake[];
-  //visible = false;
 
   constructor(private cakeService: CakeService, private appModuleService: AppModuleService) { }
 
   ngOnInit(): void {
-  //this.appModuleService.setVisible(false);
-  //console.log('cakes component isVisible: '+ this.appModuleService.isVisible());
-  this.getAllCakes();
     this.downloadCakes();
   }
 
-  getAllCakes(){
-    this.cakeService.getSavedCakes()
-        .subscribe(savedCakes => this.savedCakes = savedCakes);
-  }
 
  downloadCakes():void{
     this.cakeService.getCakes()
@@ -44,7 +36,6 @@ export class CakesComponent implements OnInit {
       }
       this.cakeService.addCake({title, desc, image} as Cake)
         .subscribe(cake => {
-            this.cakes.push(cake);
         });
     }
 

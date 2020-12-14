@@ -1,4 +1,4 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "CAKE", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
 @Table(name = "CAKE")
 public class Cake implements Serializable {
 
@@ -17,13 +16,13 @@ public class Cake implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "TITLE", unique = false, nullable = false, length = 100)//todo: changed this from being unique temporarily
+    @Column(name = "TITLE", unique = true, nullable = false, length = 100)
     private String title;
 
-    @Column(name = "DESC", unique = false, nullable = false, length = 100)
+    @Column(name = "DESC", nullable = false, length = 100)
     private String desc;
 
-    @Column(name = "IMAGE", unique = false, nullable = false, length = 300)
+    @Column(name = "IMAGE", nullable = false, length = 300)
     private String image;
 
     public Integer getId() {

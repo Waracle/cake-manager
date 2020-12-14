@@ -17,18 +17,6 @@ export class DisplayCakesComponent implements OnInit {
 
     ngOnInit(): void {
       this.getCakes();
-
-
-
-    }
-
-    isVisible(){
-    this.visible = this.appModuleService.isVisible();
-    }
-
-    setVisible(visible: boolean){
-        this.appModuleService.setVisible(visible);
-        this.visible = visible;
     }
 
      getCakes():void{

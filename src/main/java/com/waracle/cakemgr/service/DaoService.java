@@ -1,12 +1,12 @@
 package com.waracle.cakemgr.service;
 
-import com.waracle.cakemgr.Cake;
+import com.waracle.cakemgr.entity.Cake;
 
 import java.util.List;
 
 public interface DaoService {
 
-    void add(Cake cake);
+    Cake add(Cake cake);
 
     Cake getCakeByTitle(String title);
 
@@ -16,6 +16,6 @@ public interface DaoService {
 
     void deleteCake(Cake cake);
 
-    boolean checkCakeAlreadyExists(Cake cake);
+    boolean isCakeExists(Cake cake);
 
 }

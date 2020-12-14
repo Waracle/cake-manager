@@ -1,3 +1,51 @@
+Jennifer Edgar's notes:
+
+To run
+-----------
+I just left it using java 1.8
+It is now using springboot and angular
+
+Open terminal and move to the cake-manager directory - where the pom.xml is - mvn spring-boot:run
+open another terminal window and move to the cake-manager/cient directory - ng serve
+
+The url - http://localhost:4200/cakes - to download and add cakes,   http://localhost:4200/ - to display the saved cakes
+
+
+List of tasks I have completed
+------------------------------
+replace servlet functionality with springboot  restful api - created dependencies within the pom, create main method application runner.
+remove the webapp directory
+create appropriate packages
+create cake rest controller
+rename CakeEntity to Cake
+specified the port number within application.properties
+fix hibernate issue -created dependancy for hibernate.core
+change employeeId within cakeEntity to id.
+split out the hibernate functionality from the servlet.
+removed servlet
+change the table name from employee to cake
+changing the column names to be more appropriate to the cake and json names.
+some of the images cannot be found - so just leaving this as a link rather than displaying the image.
+updated the version of hibernate
+created angular 10 client with add, list and get functionality.
+introduced try with resources
+inserted css
+imported bootstrap css
+Created CakeServiceImpl and CakeService to split out the logic from the controller
+created display cakes angular component.
+added console logging
+replaced system.out.println with log output
+created deletion for testing purposes
+removed duplicate unique constraint delclarations within entity
+wrote some unit tests and integration tests
+
+
+
+
+
+
+
+
 Cake Manager Micro Service (fictitious)
 =======================================
 

@@ -1,12 +1,12 @@
 package com.waracle.cakemgr.service;
 
-import com.waracle.cakemgr.Cake;
+import com.waracle.cakemgr.entity.Cake;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 
 public interface CakeService {
 
-   List<Cake> parseCake(StringBuffer stringBuffer) throws IOException;
+   Set<Cake> parseCake(StringBuffer stringBuffer) throws IOException;
 }

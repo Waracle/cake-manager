@@ -49,7 +49,6 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Title</th>
       <th>Description</th>
       <th>Image</th>
@@ -57,10 +56,9 @@
     </thead>
     <tbody>
     <tr *ngFor="let cake of cakes">
-      <td>{{cake.id}}</td>
       <td>{{cake.title}}</td>
       <td>{{cake.desc}}</td>
-      <td><a>{{cake.image}}</a></td>
+      <td><a href={{cake.image}}>{{cake.image}}</a></td>
     </tr>
     </tbody>
   </table>
