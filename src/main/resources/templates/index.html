@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cakes</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+
+<h1>Cakes</h1>
+
+<h2>Add cake</h2>
+<form action="#" method="post" th:action="@{/newCake}" th:object="${cake}">
+    <p>Title: <input th:field="*{title}" type="text"/></p>
+    <p>Desc: <input th:field="*{desc}" type="text"/></p>
+    <p>Image: <input th:field="*{image}" type="text"/></p>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+
+<table>
+    <thead>
+    <td>Id</td>
+    <td>Title</td>
+    <td>Desc</td>
+    <td>Image url</td>
+    <td>Image</td>
+    </thead>
+    <tbody>
+    <tr th:each="cake : ${cakes}">
+        <td th:text="${cake.id}"></td>
+        <td th:text="${cake.title}"></td>
+        <td th:text="${cake.desc}"></td>
+        <td th:text="${cake.image}"></td>
+        <td><img th:src="${cake.image}"/></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cakes</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+
+<h1>New cake</h1>
+
+
+<p th:if="${error}" th:text="${error}"></p>
+<table style="width:100%" th:unless="${error != null}">
+    <thead>
+    <td>Id</td>
+    <td>Title</td>
+    <td>Desc</td>
+    <td>Image url</td>
+    <td>Image</td>
+    </thead>
+    <tbody>
+    <td th:text="${cake.id}"></td>
+    <td th:text="${cake.title}"></td>
+    <td th:text="${cake.desc}"></td>
+    <td th:text="${cake.image}"></td>
+    <td><img th:src="${cake.image}"/></td>
+    </tbody>
+</table>
+
+</div>
+
+<form action="/">
+    <input type="submit" value="View cakes"/>
+</form>
+</body>
+</html>
