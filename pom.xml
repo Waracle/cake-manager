@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.waracle</groupId>
-  <artifactId>cake-manager</artifactId>
+  <artifactId>wcl-cake-manager</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>cake-manager Maven Webapp</name>
