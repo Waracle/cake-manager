@@ -3,18 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.waracle</groupId>
   <artifactId>wcl-cake-manager</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>cake-manager Maven Webapp</name>
+  <name>wcl-cake-manager Maven Spring Boot jar app(s)</name>
   <url>http://maven.apache.org</url>
   <dependencies>
 
-      <!-- Servlet -->
-      <dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-          <version>3.1.0</version>
-      </dependency>
 
       <!-- JSON -->
       <dependency>
