@@ -1,77 +1,97 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.waracle</groupId>
-  <artifactId>cake-manager</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>cake-manager Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
 
-      <!-- Servlet -->
-      <dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-          <version>3.1.0</version>
-      </dependency>
+    <groupId>com.waracle</groupId>
+    <artifactId>wcl-cake-manager</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>wcl-cake-manager Maven Spring Boot jar containing client and server</name>
+    <url>http://maven.apache.org</url>
 
-      <!-- JSON -->
-      <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-core</artifactId>
-          <version>2.8.0</version>
-      </dependency>
+    <properties>
+        <java.version>16</java.version>
+    </properties>
 
-      <!-- JPA -->
-      <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>4.3.6.Final</version>
-      </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-      <!-- In-memory database -->
-      <dependency>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-          <version>2.3.4</version>
-      </dependency>
+    <build>
+        <finalName>wcl-cake-manager</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
-      <!-- Test dependencies. -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.1</version>
-      <scope>test</scope>
-    </dependency>
-
-  </dependencies>
-  <build>
-    <finalName>cake-manager</finalName>
-    <plugins>
-
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
-
-        <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-                <scanIntervalSeconds>10</scanIntervalSeconds>
-                <stopKey>STOP</stopKey>
-                <stopPort>8005</stopPort>
-                <httpConnector>
-                    <port>8282</port>
-                </httpConnector>
-            </configuration>
-        </plugin>
-
-    </plugins>
-  </build>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

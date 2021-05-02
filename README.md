@@ -1,11 +1,12 @@
-Cake Manager Micro Service (fictitious)
-=======================================
+# Cake Manager Micro Service (fictitious)
+
+## Original Requirements
 
 A summer intern started on this project but never managed to get it finished.
 The developer assured us that some of the above is complete, but at the moment accessing the /cakes endpoint
 returns a 404, so getting this working should be the first priority.
 
-Requirements:
+### Requirements:
 * By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
 
 * It must be possible for a human to add a new cake to the server.
@@ -15,19 +16,18 @@ the cakes currently in the system as JSON data.
 
 * The /cakes endpoint must also allow new cakes to be created.
 
-Comments:
+### Comments:
 * We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern.
 * Would be good to change the application to implement proper client-server separation via REST API.
 
-Bonus points:
+### Bonus points:
 * Tests
 * Authentication via OAuth2
 * Continuous Integration via any cloud CI system
 * Containerisation
 
 
-Original Project Info
-=====================
+### Original Project Info
 
 To run a server locally execute the following command:
 
