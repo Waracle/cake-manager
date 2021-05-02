@@ -1,24 +1,19 @@
 package com.waracle.cakemgr.apiserver.controller;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.waracle.cakemgr.entities.Cake;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
+import org.springframework.test.context.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -29,29 +24,44 @@ public class ApiServerControllerTest {
 
     RestTemplate restTemplate;
 
+    private List<Cake> generatedCakes;
+    
     @BeforeEach
     public void setupRestTemplate() {
         restTemplate = new RestTemplate();
+        generatedCakes = new ArrayList<Cake>(3);
+        generatedCakes.addAll(generateCakeList());
     }
 
     /**
+     *
      * Checks that the / REST endpoint returns a list of cakes in human readable format.
      *
      * Data is sent from the endpoint in JSON format by default, the RestTemplate converts into the required format.
      */
     @Test
-    public void checkThatApiServerRootContextReturnsCorrectText() {
+    public void checkThatApiServerRootContextReturnsCorrectCakeList() {
         var uri = URI.create(APISERVER_URI);
 
-        var result = restTemplate.getForEntity(uri, List.class);
+        var result = restTemplate.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<Cake>>() {
+        });
 
         var cakes = result.getBody();
 
+        System.out.println("Cake list... " + cakes);
         assertEquals(200, result.getStatusCodeValue());
+
         assertEquals(3, cakes.size());
-        assertEquals("Cake1", cakes.get(0));
-        assertEquals("Cake2", cakes.get(1));
-        assertEquals("Cake3", cakes.get(2));
+    }
+    
+    private List<Cake> generateCakeList() {
+        var expectedCakes = new ArrayList<Cake>();
+
+        expectedCakes.add(new Cake(UUID.randomUUID(), "Cake 1", "This is cake 1", URI.create("http://cakes/1.png")));
+        expectedCakes.add(new Cake(UUID.randomUUID(), "Cake 2", "This is cake 2", URI.create("http://cakes/2.gif")));
+        expectedCakes.add(new Cake(UUID.randomUUID(), "Cake 3", "This is cake 3", URI.create("http://cakes/3.jpg")));
+
+        return expectedCakes;
     }
 
     /**
@@ -61,7 +71,7 @@ public class ApiServerControllerTest {
      * that the raw JSON is not converted into the format of the data by the RestTemplate.
      */
     @Test
-    public void checkThatApiServerCakesContextReturnsCorrectCakeList() {
+    public void checkThatApiServerCakesContextReturnsCakeListAsJson() {
         var url = URI.create(APISERVER_URI + "cakes");
 
         var headers = new HttpHeaders();
@@ -74,6 +84,7 @@ public class ApiServerControllerTest {
         var cakes = result.getBody();
 
         assertEquals(200, result.getStatusCodeValue());
-        assertEquals("[\"Cake1\",\"Cake2\",\"Cake3\"]", result.getBody());
+        assertNotNull(result.getBody());
+
     }
 }
