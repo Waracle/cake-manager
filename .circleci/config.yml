@@ -6,9 +6,9 @@ orbs:
 build:
   docker:
      - image: cimg/openjdk:16.0.0
-    steps:
-      - checkout
-      - run: java --version
+  steps:
+     - checkout
+     - run: java --version
 
 workflows:
   maven_test:
