@@ -3,9 +3,13 @@ version: 2.1
 orbs:
   maven: circleci/maven@1.1
 
-java:
-    version: openjdk16
-    
+build:
+  docker:
+     - image: cimg/openjdk:16.0.0
+    steps:
+      - checkout
+      - run: java --version
+
 workflows:
   maven_test:
     jobs:
