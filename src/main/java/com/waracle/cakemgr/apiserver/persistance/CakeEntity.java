@@ -1,5 +1,7 @@
 package com.waracle.cakemgr.apiserver.persistance;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -7,8 +9,9 @@ import java.util.UUID;
 @Table(name="Cakes")
 public class CakeEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
 
     private String title;
     private String description;
@@ -16,8 +19,8 @@ public class CakeEntity {
     @Column(name="imageurl")
     private String imageUrl;
 
-    public void setId(int id) { this.id = id; }
-    public int getId() { return id; }
+    public void setd(UUID id) { this.id = id; }
+    public UUID getId() { return id; }
 
     public void setTitle(String title) { this.title = title; }
     public String getTitle() { return title; }
