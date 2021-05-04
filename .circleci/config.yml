@@ -3,14 +3,24 @@ version: 2.1
 orbs:
   maven: circleci/maven@1.1
 
-build:
-  docker:
-     - image: cimg/openjdk:16.0.0
-  steps:
-     - checkout
-     - run: java --version
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:16.0.0
+    resource_class: small
 
-workflows:
-  maven_test:
-    jobs:
-      - maven/test
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - wcl-cake-manager-v1-{{ checksum "pom.xml" }}
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: wcl-cake-manager-v1-{{ checksum "pom.xml" }}
+
+      - run: mvn clean install
