@@ -48,7 +48,6 @@ public class ApiServerControllerTest {
 
         var cakes = result.getBody();
 
-        System.out.println("Cake list... " + cakes);
         assertEquals(200, result.getStatusCodeValue());
 
         assertEquals(3, cakes.size());
