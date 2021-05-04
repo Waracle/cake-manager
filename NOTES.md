@@ -117,3 +117,12 @@ I use Circle CI - used to use Travis but ran out of free credits....SS
 
 - Include quality metrics - coverage stats could be pushed to something like codecov.
 - Include code analysis reports
+
+## ISSUE 9 - CREATE INTIIAL UI
+
+Built a simple Thymeleaf UI, with boxes for containing a list of Cakes and the cake list JSON.
+
+Added a simple service on the uiclient side to retrieve data to populate the Thymeleaf model
+correctly; for this git push, uses dummy data.
+
+Added tests of the Thymeleaf page with regards to model population.
