@@ -6,8 +6,8 @@ import java.net.URI;
  * Models the Cake seed data entities, containing the following attributes :-
  *
  * - title - the title pf the Cake.
- * - description - the description of the Cake.
- * - imageURL - the URI of the Cake image.
+ * - desc - the description of the Cake.
+ * - image - the Cake image URI in String format.
  */
-public record SeedDataCake(String title, String description, URI imageURL) {
+public record SeedDataCake(String title, String desc, String image) {
 }
