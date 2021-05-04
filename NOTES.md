@@ -1,5 +1,9 @@
 # SOLUTION NOTES
 
+## CI URL
+
+https://app.circleci.com/pipelines/github/warnettconsultingltd/wcl-cake-manager
+
 # DEVELOPMENT NOTES
 
 ## ISSUE 1 - Project Setup and Creation
