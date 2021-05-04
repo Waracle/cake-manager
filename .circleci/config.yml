@@ -3,6 +3,9 @@ version: 2.1
 orbs:
   maven: circleci/maven@1.1
 
+java:
+    version: openjdk16
+    
 workflows:
   maven_test:
     jobs:
