@@ -112,3 +112,8 @@ are then evaluated.
 ## ISSUE 8 - ADDING CIRCLE CI
 
 I use Circle CI - used to use Travis but ran out of free credits....SS
+
+### IMPROVEMENTS
+
+- Include quality metrics - coverage stats could be pushed to something like codecov.
+- Include code analysis reports
