@@ -103,4 +103,8 @@ enable the JPA annotations, dependencies to be entirely self contained within a 
 as opposed to leaking to other modules.
 
 A test was written to trigger the starting of the app server; the contents of the in memory db
-are then evaiuated.
+are then evaluated.
+
+## ISSUE 8 - ADDING CIRCLE CI
+
+I use Circle CI - used to use Travis but ran out of free credits....SS
