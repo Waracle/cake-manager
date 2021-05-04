@@ -81,3 +81,26 @@ data.sql is invoked by each Spring profile, so in this fake example, the client 
 have a table established - a table never used.  This is a consequence of client / server
 being defined in the same project.  This can be resolved by implementing the client and
 server as separate projects, as mentioned before.
+
+## ISSUE 7 - POPULATING DB WITH SEED DATA
+
+Populating the seed data needs to be a one-off action; this was achieved by creating a 
+SeedDataService, autowired with the previously created SeedDataRetriever and a newly created
+CakeRepository instance.
+
+The CakeRepository is a JPA Repository, for simplicity.
+
+The service uses a Java 8 stream to convert and persist the SeedDataCake entities.  Why convert?
+After all, surely it would be simpler to have a single class rather than a class for seed data, a
+class representing a cake and a class for the JPA entity?  For me, I prefer POJOs to be as free
+as annotations as possible; after all, @Id only really has context within a persistence context.
+Yes, it creates slightly more work in converting - and something like MapStruct could be potentially
+used for that - but it means that areas of the code become cleaner to read.  
+
+If the project was split into two projects - client and server - then the project structure would be
+better served by using a maven multi-module project, of which persistence would be one.  That would
+enable the JPA annotations, dependencies to be entirely self contained within a persistence module 
+as opposed to leaking to other modules.
+
+A test was written to trigger the starting of the app server; the contents of the in memory db
+are then evaiuated.

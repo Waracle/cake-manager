@@ -3,10 +3,12 @@ package com.waracle.cakemgr.apiserver.utilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cakemgr.entities.SeedDataCake;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.*;
 
+@Component
 public class SeedDataRetriever {
     public Set<SeedDataCake> getSeedData() {
         final var seedDataCakes = new HashSet<SeedDataCake>();
