@@ -26,11 +26,11 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="cakeEntity: ${cakes}">
-					<td th:text="${cakeEntity.id}" />
-					<td th:text="${cakeEntity.title}" />
-					<td th:text="${cakeEntity.desc}" />
-					<td><img th:src="${cakeEntity.image}"></td>
+				<tr th:each="cake: ${cakes}">
+					<td th:text="${cake.id}" />
+					<td th:text="${cake.title}" />
+					<td th:text="${cake.desc}" />
+					<td><img th:src="${cake.image}"></td>
 				</tr>
 				</tbody>
 			</table>

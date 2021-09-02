@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CakeRepository extends JpaRepository<CakeEntity, UUID> {
+public interface CakeRepository extends JpaRepository<Cake, UUID> {
 
 }

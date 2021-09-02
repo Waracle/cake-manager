@@ -1,6 +1,6 @@
 package com.waracle.cakemgr.mapper;
 
-import com.waracle.cakemgr.dao.CakeEntity;
+import com.waracle.cakemgr.dao.Cake;
 import com.waracle.cakemgr.dto.CakeRequestDto;
 import com.waracle.cakemgr.dto.CakeResponseDto;
 import org.modelmapper.ModelMapper;
@@ -12,22 +12,22 @@ public class CakeMapper {
   private CakeMapper() {
   }
 
-  public static CakeResponseDto fromEntityToResponseDto(CakeEntity cakeEntity) {
-    modelMapper.typeMap(CakeEntity.class, CakeResponseDto.class)
-        .addMapping(CakeEntity::getTitle, CakeResponseDto::setName)
-        .addMapping(CakeEntity::getDesc, CakeResponseDto::setDescription)
-        .addMapping(CakeEntity::getImage, CakeResponseDto::setImageUrl);
+  public static CakeResponseDto fromEntityToResponseDto(Cake cake) {
+    modelMapper.typeMap(Cake.class, CakeResponseDto.class)
+        .addMapping(Cake::getTitle, CakeResponseDto::setName)
+        .addMapping(Cake::getDesc, CakeResponseDto::setDescription)
+        .addMapping(Cake::getImage, CakeResponseDto::setImageUrl);
 
-    return modelMapper.map(cakeEntity, CakeResponseDto.class);
+    return modelMapper.map(cake, CakeResponseDto.class);
   }
 
-  public static CakeEntity fromRequestDtoToEntity(CakeRequestDto cakeDto) {
-    modelMapper.typeMap(CakeRequestDto.class, CakeEntity.class)
-        .addMapping(CakeRequestDto::getName, CakeEntity::setTitle)
-        .addMapping(CakeRequestDto::getDescription, CakeEntity::setDesc)
-        .addMapping(CakeRequestDto::getImageUrl, CakeEntity::setImage);
+  public static Cake fromRequestDtoToEntity(CakeRequestDto cakeDto) {
+    modelMapper.typeMap(CakeRequestDto.class, Cake.class)
+        .addMapping(CakeRequestDto::getName, Cake::setTitle)
+        .addMapping(CakeRequestDto::getDescription, Cake::setDesc)
+        .addMapping(CakeRequestDto::getImageUrl, Cake::setImage);
 
-    return modelMapper.map(cakeDto, CakeEntity.class);
+    return modelMapper.map(cakeDto, Cake.class);
   }
 
 }

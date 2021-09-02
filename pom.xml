@@ -4,7 +4,7 @@
     <groupId>com.waracle</groupId>
     <artifactId>cake-manager</artifactId>
     <version>1.0</version>
-    <name>cakeEntity-manager Maven Webapp</name>
+    <name>cake-manager</name>
     <url>http://maven.apache.org</url>
 
     <parent>

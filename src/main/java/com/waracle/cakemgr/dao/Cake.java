@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @DynamicUpdate
 @Table(name = "cake", uniqueConstraints = {@UniqueConstraint(columnNames = "title")})
-public class CakeEntity implements Serializable {
+public class Cake implements Serializable {
 
   private static final long serialVersionUID = -2417760290457013668L;
 

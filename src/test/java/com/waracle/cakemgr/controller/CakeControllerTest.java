@@ -1,6 +1,6 @@
 package com.waracle.cakemgr.controller;
 
-import com.waracle.cakemgr.dao.CakeEntity;
+import com.waracle.cakemgr.dao.Cake;
 import com.waracle.cakemgr.dto.CakeRequestDto;
 import com.waracle.cakemgr.dto.CakeResponseDto;
 import com.waracle.cakemgr.service.CakeService;
@@ -30,36 +30,36 @@ class CakeControllerTest {
   private CakeController cakeController;
 
   @Test
-  void testGetReturnsListOfCakes() {
-    CakeEntity cakeEntity1 = new CakeEntity();
-    cakeEntity1.setTitle("entity1Title123");
-    cakeEntity1.setDesc("entity1Description123");
-    cakeEntity1.setImage("entity1ImageUrl123");
+  void testListOfCakes() {
+    Cake cake1 = new Cake();
+    cake1.setTitle("Cake Title 123");
+    cake1.setDesc("Cake desc 123");
+    cake1.setImage("Cake Img Url ");
 
     CakeResponseDto cakeResponse1 = new CakeResponseDto();
-    cakeResponse1.setName("entity1Title123");
-    cakeResponse1.setDescription("entity1Description123");
-    cakeResponse1.setImageUrl("entity1ImageUrl123");
+    cakeResponse1.setName("Cake Title 123");
+    cakeResponse1.setDescription("Cake desc 123");
+    cakeResponse1.setImageUrl("Cake Img Url ");
 
-    CakeEntity cakeEntity2 = new CakeEntity();
-    cakeEntity2.setTitle("entity2Title123");
-    cakeEntity2.setDesc("entity2Description123");
-    cakeEntity2.setImage("entity2ImageUrl123");
+    Cake cake2 = new Cake();
+    cake2.setTitle("Cake title 909");
+    cake2.setDesc("Cake desc 909");
+    cake2.setImage("Cake Img Url 9090");
 
     CakeResponseDto cakeResponse2 = new CakeResponseDto();
-    cakeResponse2.setName("entity2Title123");
-    cakeResponse2.setDescription("entity2Description123");
-    cakeResponse2.setImageUrl("entity2ImageUrl123");
+    cakeResponse2.setName("Cake title 909");
+    cakeResponse2.setDescription("Cake desc 909");
+    cakeResponse2.setImageUrl("Cake Img Url 9090");
 
-    List<CakeEntity> cakeEntityList = new ArrayList<>();
-    cakeEntityList.add(cakeEntity1);
-    cakeEntityList.add(cakeEntity2);
+    List<Cake> cakeList = new ArrayList<>();
+    cakeList.add(cake1);
+    cakeList.add(cake2);
 
     List<CakeResponseDto> expectedCakeResponse = new ArrayList<>();
     expectedCakeResponse.add(cakeResponse1);
     expectedCakeResponse.add(cakeResponse2);
 
-    when(cakeService.getCakes()).thenReturn(cakeEntityList);
+    when(cakeService.getCakes()).thenReturn(cakeList);
 
     ResponseEntity<List<CakeResponseDto>> response = cakeController.getCakes();
 
@@ -68,15 +68,15 @@ class CakeControllerTest {
   }
 
   @Test
-  void testPostSucceedsWithOkResponse() {
+  void testPostMethod() {
     CakeRequestDto cakeRequestDto = new CakeRequestDto();
-    cakeRequestDto.setName("testTitle123");
-    cakeRequestDto.setDescription("testDescription123");
-    cakeRequestDto.setImageUrl("testImageUrl123");
+    cakeRequestDto.setName("Title_123");
+    cakeRequestDto.setDescription("Description_123");
+    cakeRequestDto.setImageUrl("ImageUrl_123");
 
     ResponseEntity<String> response = cakeController.postCake(cakeRequestDto);
 
     assertThat(response.getStatusCodeValue()).isEqualTo(200);
-    verify(cakeService, times(1)).writeCake(any(CakeEntity.class));
+    verify(cakeService, times(1)).writeCake(any(Cake.class));
   }
 }

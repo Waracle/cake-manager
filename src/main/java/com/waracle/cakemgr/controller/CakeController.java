@@ -1,6 +1,6 @@
 package com.waracle.cakemgr.controller;
 
-import com.waracle.cakemgr.dao.CakeEntity;
+import com.waracle.cakemgr.dao.Cake;
 import com.waracle.cakemgr.dto.CakeRequestDto;
 import com.waracle.cakemgr.dto.CakeResponseDto;
 import com.waracle.cakemgr.mapper.CakeMapper;
@@ -37,8 +37,8 @@ public class CakeController {
 
   @PostMapping
   public ResponseEntity<String> postCake(@Valid @RequestBody CakeRequestDto cake) {
-    CakeEntity cakeEntity = CakeMapper.fromRequestDtoToEntity(cake);
-    service.writeCake(cakeEntity);
+    Cake cakeObj = CakeMapper.fromRequestDtoToEntity(cake);
+    service.writeCake(cakeObj);
     return ResponseEntity.ok().build();
   }
 }

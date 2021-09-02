@@ -1,6 +1,6 @@
 package com.waracle.cakemgr.service;
 
-import com.waracle.cakemgr.dao.CakeEntity;
+import com.waracle.cakemgr.dao.Cake;
 import com.waracle.cakemgr.dao.CakeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,35 +40,35 @@ public class CakeServiceTest {
 
   @Test
   public void testGetCakesReturnsListOfEntitiesFromRepository() {
-    CakeEntity cakeEntity1 = new CakeEntity();
-    cakeEntity1.setTitle("entity1Title123");
-    cakeEntity1.setDesc("entity1Description123");
-    cakeEntity1.setImage("entity1ImageUrl123");
+    Cake cake1 = new Cake();
+    cake1.setTitle("Cake Title");
+    cake1.setDesc("Cake desc");
+    cake1.setImage("Cake Img. Url");
 
-    CakeEntity cakeEntity2 = new CakeEntity();
-    cakeEntity2.setTitle("entity2Title123");
-    cakeEntity2.setDesc("entity2Description123");
-    cakeEntity2.setImage("entity2ImageUrl123");
+    Cake cake2 = new Cake();
+    cake2.setTitle("Cake Title 123");
+    cake2.setDesc("Cake desc 123");
+    cake2.setImage("Cake Img. Url 123");
 
-    when(repository.findAll()).thenReturn(List.of(cakeEntity1, cakeEntity2));
+    when(repository.findAll()).thenReturn(List.of(cake1, cake2));
 
-    List<CakeEntity> cakeEntityEntities = cakeService.getCakes();
+    List<Cake> cakeEntities = cakeService.getCakes();
 
-    assertThat(cakeEntityEntities.size()).isEqualTo(2);
-    assertThat(cakeEntityEntities.get(0)).isEqualTo(cakeEntity1);
-    assertThat(cakeEntityEntities.get(1)).isEqualTo(cakeEntity2);
+    assertThat(cakeEntities.size()).isEqualTo(2);
+    assertThat(cakeEntities.get(0)).isEqualTo(cake1);
+    assertThat(cakeEntities.get(1)).isEqualTo(cake2);
   }
 
   @Test
   public void testWriteCakeSavesToRepository() {
-    CakeEntity cakeEntity = new CakeEntity();
-    cakeEntity.setTitle("entityTitle123");
-    cakeEntity.setDesc("entityDescription123");
-    cakeEntity.setImage("entityImageUrl123");
+    Cake cake = new Cake();
+    cake.setTitle("Cake Title 9090");
+    cake.setDesc("Cake desc 9090");
+    cake.setImage("Cake Img Url 9090");
 
-    cakeService.writeCake(cakeEntity);
+    cakeService.writeCake(cake);
 
-    verify(repository, times(1)).save(cakeEntity);
+    verify(repository, times(1)).save(cake);
   }
 
 }

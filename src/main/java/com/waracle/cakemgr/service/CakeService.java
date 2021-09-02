@@ -2,7 +2,7 @@ package com.waracle.cakemgr.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.waracle.cakemgr.dao.CakeEntity;
+import com.waracle.cakemgr.dao.Cake;
 import com.waracle.cakemgr.dao.CakeRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,18 +28,18 @@ public class CakeService {
 
   @PostConstruct
   public void populateCakes() throws IOException {
-    Set<CakeEntity> cakeEntities = objectMapper
+    Set<Cake> cakeEntities = objectMapper
         .readValue(new URL(cakeUrl), new TypeReference<>() {
         });
     repository.saveAll(cakeEntities);
   }
 
-  public List<CakeEntity> getCakes() {
+  public List<Cake> getCakes() {
 
     return repository.findAll();
   }
 
-  public void writeCake(CakeEntity cakeEntity) {
-    repository.save(cakeEntity);
+  public void writeCake(Cake cake) {
+    repository.save(cake);
   }
 }
