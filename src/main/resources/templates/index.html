@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+	<meta charset="UTF-8">
+	<title>Cake Manager</title>
+</head>
+<body>
+<div id="cake_page">
+	<div id="info_text">
+		<h1>Welcome to the Cake Manager application!</h1>
+	</div>
+
+	<a href="/cake">Click here to add a Cake</a>
+
+	<div id="cake_data">
+		<div id="cake_table">
+			<h3>Table of Cakes</h3>
+			<table>
+				<thead>
+				<tr>
+					<td>UUID</td>
+					<td>Title</td>
+					<td>Description</td>
+					<td>Image</td>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="cakeEntity: ${cakes}">
+					<td th:text="${cakeEntity.id}" />
+					<td th:text="${cakeEntity.title}" />
+					<td th:text="${cakeEntity.desc}" />
+					<td><img th:src="${cakeEntity.image}"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+</html>
