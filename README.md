@@ -33,7 +33,7 @@ curl -X POST "http://localhost:8181/cakes" -H "accept: */*" -H "Content-Type: ap
 
 
 ### Add Cake By Normal User Page
-![Flow](images/homePage.jpg)
+![Flow](images/addCakeForm.jpg)
 
 
 ### Swagger Api docs and Rest endpoints - Adding Cakes by rest Json format
