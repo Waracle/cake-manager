@@ -36,9 +36,10 @@ public class CakeController {
   }
 
   @PostMapping
-  public ResponseEntity<String> postCake(@Valid @RequestBody CakeRequestDto cake) {
+  public ResponseEntity<String> addCake(@Valid @RequestBody CakeRequestDto cake) {
     Cake cakeObj = CakeMapper.fromRequestDtoToEntity(cake);
     service.writeCake(cakeObj);
     return ResponseEntity.ok().build();
   }
+
 }

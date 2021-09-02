@@ -74,7 +74,7 @@ class CakeControllerTest {
     cakeRequestDto.setDescription("Description_123");
     cakeRequestDto.setImageUrl("ImageUrl_123");
 
-    ResponseEntity<String> response = cakeController.postCake(cakeRequestDto);
+    ResponseEntity<String> response = cakeController.addCake(cakeRequestDto);
 
     assertThat(response.getStatusCodeValue()).isEqualTo(200);
     verify(cakeService, times(1)).writeCake(any(Cake.class));

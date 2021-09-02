@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CakeMapperTest {
 
   @Test
-  void testMapFromEntityToResponseDto() {
+  void testEntityToResponseDto() {
     Cake cake = new Cake();
     cake.setTitle("Cake Title");
     cake.setDesc("Cake Desc123");
@@ -27,7 +27,7 @@ class CakeMapperTest {
   }
 
   @Test
-  void testMapFromRequestDtoToEntity() {
+  void testRequestDtoToEntity() {
     CakeRequestDto cakeRequestDto = new CakeRequestDto();
     cakeRequestDto.setName("Cake Title");
     cakeRequestDto.setDescription("Cake Desc123");

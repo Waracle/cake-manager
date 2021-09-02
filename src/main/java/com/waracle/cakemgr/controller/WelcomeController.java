@@ -17,7 +17,7 @@ public class WelcomeController {
   }
 
   @GetMapping("/")
-  public String displayCakeMainPage(Model model) {
+  public String welcomePage(Model model) {
     model.addAttribute("cakes", service.getCakes());
 
     return "index";

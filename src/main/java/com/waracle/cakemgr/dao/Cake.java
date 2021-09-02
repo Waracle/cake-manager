@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class Cake implements Serializable {
   @Column(name = "id", updatable = false, nullable = false)
   private UUID id;
 
+  @NotNull
   @Column(name = "title", unique = true, nullable = false)
   private String title;
 

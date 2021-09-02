@@ -6,23 +6,35 @@
 	<title>Cake Manager</title>
 </head>
 <body>
-<div id="cake_page">
-	<div id="info_text">
-		<h1>Welcome to the Cake Manager application!</h1>
+<div id="cakes">
+	<div id="infos">
+		<h1>Welcome to the Cake Manager</h1>
 	</div>
 
-	<a href="/cake">Click here to add a Cake</a>
+	<div id="info_Cakes">
+		<a href="/cakes">List of Cakes in Json format</a>
+		<tr/><tr/><tr/>
+	</div>
 
-	<div id="cake_data">
-		<div id="cake_table">
-			<h3>Table of Cakes</h3>
+	<div id="txt">
+		<h1> </h1>
+	</div>
+
+	<div id="infoOnAddCakes">
+		<a href="http://localhost:8181/swagger-ui/index.html#/cake-controller/postCakeUsingPOST">Click Here to add Cakes Using Swagger UI</a>
+		<h5>(html page Not Implemented but can be enhanced later. Pls use Swagger UI to add cakes)</h5>
+	</div>
+
+	<div id="cakeData">
+		<div id="dataTable">
+			<h4>List of Initial Cakes</h4>
 			<table>
 				<thead>
 				<tr>
-					<td>UUID</td>
-					<td>Title</td>
-					<td>Description</td>
-					<td>Image</td>
+					<td><b>UUID</b></td>
+					<td><b>Title</b></td>
+					<td><b>Description</b></td>
+					<td><b>Image</b></td>
 				</tr>
 				</thead>
 				<tbody>
