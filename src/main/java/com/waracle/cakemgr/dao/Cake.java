@@ -36,6 +36,6 @@ public class Cake implements Serializable {
   @Column(name = "desc", nullable = false)
   private String desc;
 
-  @Column(name = "image", nullable = false)
+  @Column(name = "image", nullable = true)
   private String image;
 }

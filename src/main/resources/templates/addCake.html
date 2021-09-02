@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cake Manager App - Add Cake</title>
+</head>
+<body>
+<div id="cake_page">
+    <div id="infos">
+        <h1>Welcome to the Cake Manager</h1>
+    </div>
+
+    <div id="txt">
+        <h1> </h1>
+    </div>
+
+    <div id="addCake">
+        <h1>Add Cake</h1>
+
+        <form action="#" th:action="@{/cake}" th:object="${cake}" method="post">
+            <label>Name:</label>
+            <input type="text" th:field="*{name}"/><br/>
+            <div>
+                <h1> </h1>
+            </div>
+            <label>Description:</label>
+            <input type="text" th:field="*{description}"/><br/>
+            <div>
+                <h1> </h1>
+            </div>
+            <button type="submit">Add Cake</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
