@@ -1,7 +1,7 @@
 package com.waracle.cakes.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,10 +53,10 @@ public class CakeServiceImpl implements CakeService {
 	@PostConstruct
 	private void postConstruct() throws IOException {
 		
-		File file = cakesJsonFileResource.getFile();
+		InputStream in = cakesJsonFileResource.getInputStream();
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		Set<Cake> cakes = objectMapper.readValue(file, new TypeReference<Set<Cake>>(){});
+		Set<Cake> cakes = objectMapper.readValue(in, new TypeReference<Set<Cake>>(){});
 		cakeRepository.saveAll(cakes);
 	}
 
