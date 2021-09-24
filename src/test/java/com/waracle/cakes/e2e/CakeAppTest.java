@@ -14,10 +14,12 @@ import org.assertj.core.util.Files;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ClassPathResource;
@@ -32,6 +34,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waracle.cakes.model.dto.CakeDTO;
+import com.waracle.cakes.service.CakeService;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -48,6 +51,9 @@ public class CakeAppTest {
 
     @Autowired
     private CamelContext camelContext;
+    
+    @SpyBean
+    private CakeService cakeService;
     
     private Set<CakeDTO> cakes;
     
@@ -99,7 +105,7 @@ public class CakeAppTest {
     			HttpMethod.POST, request, new ParameterizedTypeReference<CakeDTO>() {
     	});
     	
-    	assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+    	assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     	
     	
     	cakes.add(newCake);
@@ -110,7 +116,7 @@ public class CakeAppTest {
     	assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     	List<CakeDTO> cakes = getResponse.getBody();
     	assertThat(cakes).hasSize(6);
-    	assertThat(cakes).containsAll(cakes);
+    	assertThat(cakes).contains(newCake);
     	
     }
     
@@ -165,6 +171,22 @@ public class CakeAppTest {
     	ResponseEntity<String> postResponse = restTemplate.postForEntity("/cakes", invalidCakeJson, String.class);
     	
     	assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    } 
+    }
+    
+    @Test
+    public void getServerError500Test() {
+    	
+    	Mockito.when(cakeService.findCakes()).thenThrow(RuntimeException.class);
+    	
+        ResponseEntity<String> errorResponse = restTemplate.exchange("/cakes",
+                HttpMethod.GET, null, new ParameterizedTypeReference<String>() {
+                });
+        
+        assertThat(errorResponse.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    
+
+    
 
 }

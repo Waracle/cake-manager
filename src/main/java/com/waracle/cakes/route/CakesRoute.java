@@ -24,20 +24,24 @@ public class CakesRoute extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		
-		onException(JsonParseException.class, UnrecognizedPropertyException.class, IllegalArgumentException.class)
+		onException(JsonParseException.class, UnrecognizedPropertyException.class, 
+				IllegalArgumentException.class, DataIntegrityViolationException.class)
 			.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
-			.setBody(constant("400 Bad Request")).continued(true)
+			.setBody(constant("400 Bad Request"))
+			.handled(true)
 			.log(LoggingLevel.ERROR, "${exchangeProperty[CamelExceptionCaught]}")
 			.end();
 		onException(Exception.class)
 			.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
-			.setBody(constant("500 Server error")).continued(true)
+			.setBody(constant("500 Server error"))
+			.handled(true)
 			.log(LoggingLevel.ERROR, "${exchangeProperty[CamelExceptionCaught]}")
 			.end();
 		
 
 		restConfiguration().component("servlet").contextPath("/").apiContextPath("/api-doc")
-				.apiProperty("api.title", "Cakes REST API").apiProperty("api.version", "1.0")
+				.apiProperty("api.title", "Cakes REST API")
+				.apiProperty("api.version", "1.0")
 				.apiProperty("cors", "true")
 				.apiContextRouteId("doc-api")
 				.port(env.getProperty("server.port", "8080"))
@@ -58,13 +62,8 @@ public class CakesRoute extends RouteBuilder {
 				.endRest()
 			.post("/cakes").type(CakeDTO.class)
 				.route().routeId("create-cake-api")
-					.onException(DataIntegrityViolationException.class)
-					.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
-					.setBody(constant("400 Bad Request DataIntegrityViolationException"))
-					.continued(true)
-					.end()
-				.bean(CakeService.class, "createCake(${body})");
-
+					.bean(CakeService.class, "createCake(${body})")
+					.setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201));
 			
 	}
 
