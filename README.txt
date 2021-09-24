@@ -1,57 +1,62 @@
 Cake Manager Micro Service (fictitious)
 =======================================
 
-A summer intern started on this project but never managed to get it finished.
-The developer assured us that some of the above is complete, but at the moment accessing the /cakes endpoint
-returns a 404, so getting this working should be the first priority.
 
-Requirements:
-* By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
+Solution delivered as Camel Spring Boot Rest Service Application
+With intergration tests against fully deployed application.
 
-* It must be possible for a human to add a new cake to the server.
+TECHNOLOGIES
 
-* By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of
-the cakes currently in the system as JSON data.
-
-* The /cakes endpoint must also allow new cakes to be created.
-
-Comments:
-* We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern.
-* Would be good to change the application to implement proper client-server separation via REST API.
-
-Bonus points:
-* Tests
-* Authentication via OAuth2
-* Continuous Integration via any cloud CI system
-* Containerisation
+Spring Boot
+Spring Data JPA
+Apache Camel
+    - Camel Rest
+    - Camel Velocity
+Spring Test
+Junit5
 
 
-Original Project Info
-=====================
+To run
 
-To run a server locally execute the following command:
+mvn package
 
-`mvn jetty:run`
+followed by
 
-and access the following URL:
+mvn spring-boot:run
 
-`http://localhost:8282/`
+URLS
 
-Feel free to change how the project is run, but clear instructions must be given in README
-You can use any IDE you like, so long as the project can build and run with Maven or Gradle.
+Swagger
 
-The project loads some pre-defined data in to an in-memory database, which is acceptable for this exercise.  There is
-no need to create persistent storage.
+GET http://localhost:8080/api-doc
 
 
-Submission
-==========
+Velocity template HTML Cakes View
 
-Please provide your version of this project as a git repository (e.g. Github, BitBucket, etc).
+GET http://localhost:8080/
 
-Alternatively, you can submit the project as a zip or gzip. Use Google Drive or some other file sharing service to
-share it with us.
+Pretty Print Json Cakes List
 
-Please also keep a log of the changes you make as a text file and provide this to us with your submission.
+GET http://localhost:8080/cakes
 
-Good luck!
+Create new Cake with CakeDTO Json HttpRequest.Body
+
+POST http://localhost:8080/cakes
+
+
+ADDITIONAL CHANGES
+
+- moved cakes.json into version control so that there's no remote dependency and changes to the file are versioned and tested.
+- removed all the duplicates from cakes.json file.
+- updated some of the photos.
+
+
+
+
+
+
+
+
+
+
+
