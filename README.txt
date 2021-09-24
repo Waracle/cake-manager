@@ -40,9 +40,18 @@ followed by
 
 mvn spring-boot:run
 
+To run Docker image
+
+docker run -d -p 8080:8080 clarkregragui/docker-cakes-manager-repo:latest
+
+Alternatively directly with
+
+java -jar cake-manager-1.0-SNAPSHOT.jar
+
+
 URLs
 
-Swagger
+Swagger API Docs
 
 GET http://localhost:8080/api-doc
 
