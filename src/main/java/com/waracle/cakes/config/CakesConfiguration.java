@@ -4,9 +4,11 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.waracle.cakes.model.dto.CakeDTO;
 
+@Profile("prod")
 @Configuration
 public class CakesConfiguration {
 	

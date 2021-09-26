@@ -30,16 +30,14 @@ camel:
   # Spring Data JPA configuration
 spring:
   profiles:
-    active: prod
+    active: test
   jpa:
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
+  
+logging:
+  level: 
+      root: INFO
+      com.waracle.cakes: DEBUG
+      org.apache.camel: DEBUG
     
-  Security:
-        oauth2:
-            client:
-                registration:
-                    github:
-                       clientId: b70d431814e6d107934d
-                       clientSecret: 9dd51deb2f8a55fe0ee7856176499c882f608281
-                                
