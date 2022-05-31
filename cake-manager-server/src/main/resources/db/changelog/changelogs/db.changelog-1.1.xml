@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="admin" id="2">
+        <insert tableName="cake">
+            <column name="id" valueNumeric="1"/>
+            <column name="title" value="Lemon cheesecake"/>
+            <column name="description" value="A cheesecake made of lemon"/>
+            <column name="image_url" value="https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg"/>
+        </insert>
+        <insert tableName="cake">
+            <column name="id" valueNumeric="2"/>
+            <column name="title" value="victoria sponge"/>
+            <column name="description" value="sponge with jam"/>
+            <column name="image_url" value="http://www.bbcgoodfood.com/sites/bbcgoodfood.com/files/recipe_images/recipe-image-legacy-id--1001468_10.jpg"/>
+        </insert>
+        <insert tableName="cake">
+            <column name="id" valueNumeric="3"/>
+            <column name="title" value="Carrot cak"/>
+            <column name="description" value="Bugs bunnys favourite"/>
+            <column name="image_url" value="http://www.villageinn.com/i/pies/profile/carrotcake_main1.jpg"/>
+        </insert>
+        <insert tableName="cake">
+            <column name="id" valueNumeric="4"/>
+            <column name="title" value="Banana cake"/>
+            <column name="description" value="Donkey kongs favourite"/>
+            <column name="image_url" value="http://ukcdn.ar-cdn.com/recipes/xlarge/ff22df7f-dbcd-4a09-81f7-9c1d8395d936.jpg"/>
+        </insert>
+        <insert tableName="cake">
+            <column name="id" valueNumeric="5"/>
+            <column name="title" value="Birthday cake"/>
+            <column name="description" value="a yearly treat"/>
+            <column name="image_url" value="http://cornandco.com/wp-content/uploads/2014/05/birthday-cake-popcorn.jpg"/>
+        </insert>
+        <insert tableName="cake">
+            <column name="id" valueNumeric="6"/>
+            <column name="title" value="Lemon cheesecake"/>
+            <column name="description" value="A cheesecake made of lemon"/>
+            <column name="image_url" value="https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg"/>
+        </insert>
+        <addAutoIncrement tableName="cake" columnName="id" columnDataType="bigint" startWith="7" incrementBy="1" />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,255 @@
+openapi: 3.0.0
+servers:
+
+  -  url: http://localhost/cake/1.0.0
+  -  url: https://localhost/cake/1.0.0
+
+info:
+  description: This is a API for a cake manager. It should allow you to add new cakes and view them as a list.
+  version: "1.0.0"
+  title: Simple Cake Manager API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /cakes:
+    get:
+      tags:
+        - admins
+      summary: gets a all cakes
+      security:
+        - oAuthSample: [admin]   # Use OAuth with a different scope
+      operationId: getCakes
+      description: Retrieves all the cakes
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cake'
+        '400':
+          description: bad input parameter
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+        '403':
+          description: Access token does not have the required scope
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+    post:
+      tags:
+        - admins
+      summary: adds a new cake
+      security:
+        - oAuthSample: [write]   # Use OAuth with a different scope
+      operationId: addCake
+      description: Adds a new cake to the system
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CakeRequest'
+            encoding: # The same level as schema
+              image: # Property name (see above)
+                contentType: image/png, image/jpeg
+        description: Cake to add
+        required: true
+      responses:
+        '201':
+          description: cake created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CakeResponse'
+
+        '400':
+          description: 'invalid input, object invalid'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+        '403':
+          description: Access token does not have the required scope
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+  /cakes/{id}:
+    get:
+      tags:
+        - admins
+      summary: gets a cake by id
+      security:
+        - oAuthSample: [admin]   # Use OAuth with a different scope
+      operationId: getCakeById
+      description: "Retrieves a by Id"
+      parameters:
+        - in: path
+          name: id
+          description: cake id
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cake'
+        '400':
+          description: bad input parameter
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+        '403':
+          description: Access token does not have the required scope
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+
+#apply security globally...
+security:
+  - basicAuth: []
+
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+    oAuthSample:    # <---- arbitrary name
+      type: oauth2
+      description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
+      flows:
+        authorizationCode:
+          authorizationUrl: https://localhost:8083/oauth/authorize
+          tokenUrl: localhost:8083/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+  schemas:
+    CakeResponse:
+      type: object
+      required:
+        - id
+        - uri
+        - fileName
+        - size
+      properties:
+        id:
+          format: int64
+          type: integer
+        uri:
+          type: string
+        fileName:
+          type: string
+        size:
+          format: int64
+          type: integer
+    CakeRequest:
+      type: object
+      required:
+        - title
+        - description
+        - image
+
+      properties:
+        title:
+          type: string
+          example: John Doe Cake
+        description:
+          type: string
+          example: John Doe Cake Description
+        image:
+          type: string
+          format: binary
+    Cake:
+      type: object
+      required:
+        - title
+        - description
+        - image
+
+      properties:
+        title:
+          type: string
+          example: John Doe Cake
+        description:
+          type: string
+          example: John Doe Cake Description
+        image:
+          type: string
+          format: byte
+    ErrorDetails:
+      description: a set of error codes and detatails recieved when trying to to complete the request
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/JSONAPIErrorDetails'
+
+    JSONAPIErrorDetails:
+      description: Error detals object
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          type: string
+        message:
+          type: string
+        reference:
+          type: string
+

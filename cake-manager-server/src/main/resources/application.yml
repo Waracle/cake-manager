@@ -1,0 +1,42 @@
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+spring:
+  datasource:
+    #initialization-mode: ALWAYS
+    driverClassName: org.h2.Driver
+    password: password
+    url: jdbc:h2:file:./testdb
+    #url=jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+    show-sql: true
+    driverClassName: com.mysql.cj.jdbc.Driver
+  liquibase:
+#    default-schema: cake-manager
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+okta:
+  oauth2:
+    issuer: https://dev-15015140.okta.com/oauth2/default
+    #    client-id: 0oa5r3zv22LCG8J7i5d6
+    #    client-secret: 5WG-Pua6JZ5-npG2S4pGXVqP_PhhMrvreGl6ITCb
+    client-id: 0oa5rd92hv6mViZem5d6
+    client-secret: b9N4M0-WKkpv2Pe4tTeU-VvavBxhxPMgN5SpVCtg
+    scopes: openid
+#    redirect-uri: /authorization-code/callback
+
+# All files uploaded through the REST API will be stored in this directory
+file:
+  upload-dir: ./uploads

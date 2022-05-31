@@ -1,0 +1,5 @@
+databaseChangeLog:
+#  - includeAll:
+#      path: classpath:db/changelog/changelogs/*.xml
+  - include:
+      file: classpath:db/changelog/changelogs/db.changelog-1.0.xml

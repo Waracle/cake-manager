@@ -1,0 +1,111 @@
+
+// A Declarative Pipeline is defined within a 'pipeline' block.
+pipeline {
+    // agent defines where the pipeline will run.
+    agent any
+
+    // poll every minute
+    triggers { pollSCM('* * * * *') }
+
+    parameters {
+        string(defaultValue: "develop", description: 'Branch Specifier', name: 'SPECIFIER')
+        booleanParam(defaultValue: false, description: 'Deploy to QA Environment ?', name: 'DEPLOY_QA')
+        booleanParam(defaultValue: false, description: 'Deploy to UAT Environment ?', name: 'DEPLOY_UAT')
+        booleanParam(defaultValue: false, description: 'Deploy to PROD Environment ?', name: 'DEPLOY_PROD')
+    }
+    stages {
+        stage("Initialize") {
+            steps {
+                script {
+                    //notifyBuild('STARTED')
+                    echo "${BUILD_NUMBER} - ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                    echo "Branch Specifier :: ${params.SPECIFIER}"
+                    echo "Deploy to QA? :: ${params.DEPLOY_QA}"
+                    echo "Deploy to UAT? :: ${params.DEPLOY_UAT}"
+                    echo "Deploy to PROD? :: ${params.DEPLOY_PROD}"
+                    sh 'rm -rf target/universal/*.zip'
+                }
+            }
+        }
+            stage('Checkout') {
+                steps {
+                    // Checkout out branch main
+                    git url: 'https://github.com/adam-mahmood/cake-manager.git', branch: 'main'
+                    echo "$GIT_BRANCH"
+                }
+            }
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+
+                // Run Maven on a Unix agent.
+                sh '''
+                    
+                    cd cake-manager-server
+                    ./mvnw clean package
+                 '''
+
+                // To run Maven on a Windows agent, use
+                // bat "./mvnw clean package"
+            }
+
+            post {
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'cake-manager-server/target/*.jar'
+                }
+
+            changed {
+                emailext subject: "Job \'${JOB_NAME}\' (build ${BUILD_NUMBER}) ${currentBuild.result}",
+                    body: "Please go to ${BUILD_URL} and verify the build",
+                    attachLog: true,
+                    compressLog: true,
+                    to: "adds0072004@hotmail.com",
+                    recipientProviders: [upstreamDevelopers(), requestor()]
+                }
+            }
+        }
+
+
+        stage('Deploy') {
+            parallel {
+                stage('Deploy to CI') {
+                    steps {
+                        echo "Deploying to CI Environment."
+                    }
+                }
+
+                stage('Deploy to QA') {
+                    when {
+                        expression {
+                            params.DEPLOY_QA == true
+                        }
+                    }
+                    steps {
+                        echo "Deploy to QA..."
+                    }
+                }
+                stage('Deploy to UAT') {
+                    when {
+                        expression {
+                            params.DEPLOY_UAT == true
+                        }
+                    }
+                    steps {
+                        echo "Deploy to UAT..."
+                    }
+                }
+                stage('Deploy to Production') {
+                    when {
+                        expression {
+                            params.DEPLOY_PROD == true
+                        }
+                    }
+                    steps {
+                        echo "Deploy to PROD..."
+                    }
+                }
+            }
+        }
+    }
+}
