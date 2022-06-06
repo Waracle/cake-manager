@@ -27,17 +27,14 @@ pipeline {
                 }
             }
         }
-//             stage('Checkout') {
-//                 steps {
-//                     // Checkout out branch main
-//                     git url: 'https://github.com/adam-mahmood/cake-manager.git', branch: 'main'
-//                     echo "$GIT_BRANCH"
-//                 }
-//             }
+
         stage('Build') {
             steps {
-                // Get some code from a GitHub repository
+                //  permissions
                 sh "chmod +x -R ${env.WORKSPACE}"
+
+                sh 'ls -la'
+
                 // Run Maven on a Unix agent.
                 sh '''
 
@@ -66,7 +63,34 @@ pipeline {
             }
         }
 
+ stage('Docker Image Build') {
+      steps {
+        script{
+              sh 'docker ps'
+               }
+            }
+        }
+    }
+     stage('Docker Image scan') {
+              steps {
+                script{
 
+                     }
+                }
+             }
+     }
+
+    stage('Docker Image Push') {
+     when{
+	      branch 'master'
+      }
+      steps {
+        script{
+
+               }
+            }
+        }
+    }
         stage('Deploy') {
             parallel {
                 stage('Deploy to CI') {
