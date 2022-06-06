@@ -62,33 +62,7 @@ pipeline {
             }
         }
 
-        stage('Docker Image Build') {
-            steps {
-                script {
-                    sh 'docker ps'
-                }
-            }
-        }
 
-        stage('Docker Image scan') {
-            steps {
-                script {
-
-                }
-            }
-        }
-
-
-        stage('Docker Image Push') {
-            when {
-                branch 'master'
-            }
-            steps {
-                script {
-
-                }
-            }
-        }
 
         stage('Deploy') {
             parallel {
