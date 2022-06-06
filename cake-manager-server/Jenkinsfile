@@ -1,4 +1,3 @@
-
 // A Declarative Pipeline is defined within a 'pipeline' block.
 pipeline {
     // agent defines where the pipeline will run.
@@ -52,45 +51,45 @@ pipeline {
                     archiveArtifacts 'cake-manager-server/target/*.jar'
                 }
 
-            changed {
-                emailext subject: "Job \'${JOB_NAME}\' (build ${BUILD_NUMBER}) ${currentBuild.result}",
-                    body: "Please go to ${BUILD_URL} and verify the build",
-                    attachLog: true,
-                    compressLog: true,
-                    to: "adds0072004@hotmail.com",
-                    recipientProviders: [upstreamDevelopers(), requestor()]
+                changed {
+                    emailext subject: "Job \'${JOB_NAME}\' (build ${BUILD_NUMBER}) ${currentBuild.result}",
+                            body: "Please go to ${BUILD_URL} and verify the build",
+                            attachLog: true,
+                            compressLog: true,
+                            to: "adds0072004@hotmail.com",
+                            recipientProviders: [upstreamDevelopers(), requestor()]
                 }
             }
         }
 
- stage('Docker Image Build') {
-      steps {
-        script{
-              sh 'docker ps'
-               }
-            }
-        }
-    }
-     stage('Docker Image scan') {
-              steps {
-                script{
-
-                     }
+        stage('Docker Image Build') {
+            steps {
+                script {
+                    sh 'docker ps'
                 }
-             }
-     }
-
-    stage('Docker Image Push') {
-     when{
-	      branch 'master'
-      }
-      steps {
-        script{
-
-               }
             }
         }
-    }
+
+        stage('Docker Image scan') {
+            steps {
+                script {
+
+                }
+            }
+        }
+
+
+        stage('Docker Image Push') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+
+                }
+            }
+        }
+
         stage('Deploy') {
             parallel {
                 stage('Deploy to CI') {
