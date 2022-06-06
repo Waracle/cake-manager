@@ -27,13 +27,13 @@ pipeline {
                 }
             }
         }
-            stage('Checkout') {
-                steps {
-                    // Checkout out branch main
-                    git url: 'https://github.com/adam-mahmood/cake-manager.git', branch: 'main'
-                    echo "$GIT_BRANCH"
-                }
-            }
+//             stage('Checkout') {
+//                 steps {
+//                     // Checkout out branch main
+//                     git url: 'https://github.com/adam-mahmood/cake-manager.git', branch: 'main'
+//                     echo "$GIT_BRANCH"
+//                 }
+//             }
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository

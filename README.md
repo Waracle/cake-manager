@@ -38,7 +38,8 @@
 
 The Username/ Secrets should be kept in a Secrets Manager, but for demo purposes it is being exposed.
 
-Note when invoking a POST request in Postman 
+Note when invoking /cakes endpoint POST request in Postman, ensure that the in the Body's tab, `form-data` is selected and that the `image` key is of type `file`
+
 
 ## Start Jenkins
 * Start the jenkins container:
@@ -51,6 +52,17 @@ Note when invoking a POST request in Postman
 `docker ps`
 * Navigate to localhost:8085 and enter admin password from above to unlock jenkins
 * On the next page select `Install Suggested Plugins` and wait for the plugins to install
+* On the next page, set admin credentials
+
+### Set Github Access Token
+* GitHub access token for Jenkins: `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`
+* Once Jenkins is setup, navigate to the Dashboard view and Click on `Manage Jenkins` and then click on  `Configure System`.
+* Navigate down the page to `GitHub Servers` and then click on the `Add GitHub Server` button and click `GitHub Servers`
+* In the `Name` textbox enter `GitHub Connection` and click on the `Add` button next to `Credentials` and select `Jenkins` in the dropdown menu. A Dialog box will open allowing you to enter GitHub Credentials.
+* Click on the `Kind` dropdown box and select `Secret text`,  copy the above access token in the `Secret` textbox and set the `Id` as `GitHub Connection`.
+* Then Click `Add`.
+* Now, you will be navigated back to the `GitHub Servers`section, click on the  dropdown box  under `Credentials` and select `GitHub Connection`
+* Click `Test Connection` and it should connect successfully.
 
 ## Configure Jenkins pipeline
 
@@ -62,7 +74,7 @@ Steps to Create a simple Multibranch Pipeline Project
    cake-manager-server" in copy from field.
 3. Add a Branch Source and enter the location of the repository.
 4. Enter the GitHub username, Password, ID, and Description
-5. Save your details, and it will auto run to find all branches from git hub.
+5. Save your details, and it will auto run to find all branches from GitHub.
 
 ## Run back end Micro-service
 * `cd cake-manager-server` 
@@ -85,31 +97,18 @@ cake manager has been built as a multi-model app which contains below modules
 * ***cake-manager-server***
     * this module is the back end micro service that exposes a rest api
 * ***api***
-    *  module will be responsible for Swagger, Api docs, Api models, auto generated models by
-      protocol buffer and swagger utility
+    *  module will cntain the swagger spec
 * ***cake-manager-client***
     * Angular Front end
   
-#### Microservice packages roles & responsibility
 
-Rename or define classes under package service, controller, client layer.
-
-* Controller - classes for request and response transfer tasks to service package layer and map data
-  in respective model
-* Service - classes to execute or orchestration of business implementation or fetch data from other
-  service/back end systems by calling client layer
-* Client - classes to interact with backend service and play as a wrapper for all types of
-  communication with backend system
-* Repository - classes for all communication with the microservice database
-* Config - classes for defining configuration and beans
-* Constants - enum type constants
-* Utils - microservice level utilities only
 
 ## Endpoints Available
 * Swagger Ui:  http://localhost:8080/swagger-ui/index.html#/
 * POST: /cakes
 * GET: /cakes
 * GET: /cakes/{id}
+* GET: /images/{filename}
 
 ### To run BDD tests
 
