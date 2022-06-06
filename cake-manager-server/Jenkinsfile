@@ -37,10 +37,10 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-
+                sh "chmod +x -R ${env.WORKSPACE}"
                 // Run Maven on a Unix agent.
                 sh '''
-                    
+
                     cd cake-manager-server
                     ./mvnw clean package
                  '''
