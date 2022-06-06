@@ -93,8 +93,6 @@ class CakManagementServiceImplTest {
         when(cakeRepository.findAll()).thenReturn(List.of(CakeEntity.builder().id(1L).description(desc).title(title).imageUrl("url").build()));
 
 
-        when(fileService.load(any())).thenReturn(Optional.of(new ByteArrayResource(new byte[]{})));
-
         //When
         List<Cake> response = service.getCakes();
 

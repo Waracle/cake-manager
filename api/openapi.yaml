@@ -25,7 +25,7 @@ paths:
         - admins
       summary: gets a all cakes
       security:
-        - oAuthSample: [admin]   # Use OAuth with a different scope
+        - OAuth2: [read]   # Use OAuth with a different scope
       operationId: getCakes
       description: Retrieves all the cakes
       parameters:
@@ -68,7 +68,7 @@ paths:
         - admins
       summary: adds a new cake
       security:
-        - oAuthSample: [write]   # Use OAuth with a different scope
+        - OAuth2: [write]   # Use OAuth with a different scope
       operationId: addCake
       description: Adds a new cake to the system
       requestBody:
@@ -119,7 +119,7 @@ paths:
         - admins
       summary: gets a cake by id
       security:
-        - oAuthSample: [admin]   # Use OAuth with a different scope
+        - OAuth2: [read]   # Use OAuth with a different scope
       operationId: getCakeById
       description: "Retrieves a by Id"
       parameters:
@@ -156,11 +156,54 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ErrorDetails'
+  /images/{filename}:
+    get:
+      tags:
+        - admins
+      summary: gets an image from the server
+      security:
+        - OAuth2: [read]   # Use OAuth with a different scope
+      operationId: getImageByFilename
+      description: "Retrieves Image  by filename"
+      parameters:
+        - in: path
+          name: filename
+          description: filename of image
+          required: true
+          schema:
+            type: string
+            format: '([^\s]+(\.(?i)(jpe?g|png|gif|bmp))$)'
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            image/*:     # Media type
+              schema:
+                type: string
+                format: byte
+        '400':
+          description: bad input parameter
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
+        '403':
+          description: Access token does not have the required scope
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
 
-#apply security globally...
-security:
-  - basicAuth: []
-
+##apply security globally...
+#security:
+#  - basicAuth: []
+#
 
 components:
   securitySchemes:
@@ -168,13 +211,13 @@ components:
       type: http
       scheme: basic
 
-    oAuthSample:    # <---- arbitrary name
+    OAuth2:    # <---- arbitrary name
       type: oauth2
       description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
       flows:
         authorizationCode:
-          authorizationUrl: https://localhost:8083/oauth/authorize
-          tokenUrl: localhost:8083/oauth/token
+          authorizationUrl: https://localhost:8080/oauth/authorize
+          tokenUrl: localhost:8080/oauth/token
           scopes:
             read: Grants read access
             write: Grants write access
@@ -229,9 +272,11 @@ components:
         description:
           type: string
           example: John Doe Cake Description
-        image:
+        imageFilename:
           type: string
-          format: byte
+#        image:
+#          type: string
+#          format: byte
     ErrorDetails:
       description: a set of error codes and detatails recieved when trying to to complete the request
       properties:

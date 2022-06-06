@@ -1,10 +1,10 @@
 package com.waracle.cakemgr.service;
 
 import com.waracle.cakemgr.config.FileStorageProperties;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.FileSystemUtils;
@@ -13,23 +13,24 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LocalFileStorageServiceTest {
 
-    private final Path uploads = Path.of("uploads");
+    private Path uploads;
 
     private LocalFileStorageService localFileStorageService;
 
     @BeforeEach
     void setUp() throws IOException {
+        uploads = Files.createTempDirectory(Paths.get("target"), "tmpDirPrefix");
         FileStorageProperties fileStorageProperties = new FileStorageProperties();
-        fileStorageProperties.setUploadDir("uploads");
+        fileStorageProperties.setUploadDir(uploads.toString());
         localFileStorageService = new LocalFileStorageService(fileStorageProperties);
-        Files.createDirectory(uploads);
+
+
     }
 
     @AfterEach
@@ -66,10 +67,10 @@ class LocalFileStorageServiceTest {
         localFileStorageService.save(file);
 
         //When
-        Optional<Resource> resource = localFileStorageService.load(uploads.resolve(Paths.get("hello.txt")).toUri().toString());
+        byte[] resource = localFileStorageService.load("hello.txt");
 
         //Then
-        assertTrue(resource.isPresent());
+        assertNotNull(resource);
     }
 
     @Test

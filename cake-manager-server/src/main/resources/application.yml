@@ -29,11 +29,10 @@ spring:
 
 okta:
   oauth2:
-    issuer: https://dev-15015140.okta.com/oauth2/default
-    #    client-id: 0oa5r3zv22LCG8J7i5d6
-    #    client-secret: 5WG-Pua6JZ5-npG2S4pGXVqP_PhhMrvreGl6ITCb
-    client-id: 0oa5rd92hv6mViZem5d6
-    client-secret: b9N4M0-WKkpv2Pe4tTeU-VvavBxhxPMgN5SpVCtg
+    issuer: https://dev-47242716.okta.com/oauth2/default
+    client-id: 0oa5aelqfzmqjujRp5d7
+#    should be stored in secrets manager
+    client-secret: 0vCNxH9qLdNVRe-UQosc2jsBwEwWihUzx_Tiq09d
     scopes: openid
 #    redirect-uri: /authorization-code/callback
 

@@ -7,13 +7,14 @@ import com.waracle.manager.cake.model.Cake;
 import com.waracle.manager.cake.model.CakeResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,23 +55,13 @@ public class CakManagementServiceImpl implements CakeManagementService {
     }
 
     private Cake toCake(CakeEntity cakeEntity) {
-        try {
-            return new Cake().description(cakeEntity.getDescription()).title(cakeEntity.getTitle()).image(getBytes(cakeEntity));
-        } catch (IOException e) {
-            log.error(e.getMessage(),e.fillInStackTrace());
-            throw new RuntimeException(e.getMessage(),e);
-        }
-    }
-
-    private byte[] getBytes(CakeEntity cakeEntity) throws IOException {
-        Optional<Resource> optionalResource = fileService.load(cakeEntity.getImageUrl());
-        return optionalResource.isPresent() ? optionalResource.get() .getInputStream().readAllBytes() : new byte[] {};
+        return new Cake().description(cakeEntity.getDescription()).title(cakeEntity.getTitle()).imageFilename(FilenameUtils.getName(cakeEntity.getImageUrl()));
     }
 
     private boolean isValidImage(MultipartFile image) {
-        return Objects.requireNonNull(image.getContentType()).equalsIgnoreCase("image/jpeg")
+        return Objects.requireNonNull(image.getContentType()).equalsIgnoreCase(MediaType.IMAGE_JPEG_VALUE)
                 || image.getContentType().equalsIgnoreCase("image/jpg")
-                || image.getContentType().equalsIgnoreCase("image/png");
+                || image.getContentType().equalsIgnoreCase(MediaType.IMAGE_PNG_VALUE);
     }
 
 }

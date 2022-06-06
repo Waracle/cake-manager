@@ -33,10 +33,27 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-data-jpa</artifactId>
       </dependency>
+
+      <!-- security - begin -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
 <!--      <dependency>-->
 <!--          <groupId>org.springframework.boot</groupId>-->
-<!--          <artifactId>spring-boot-starter-security</artifactId>-->
+<!--          <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
 <!--      </dependency>-->
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+      <dependency>
+          <groupId>com.okta.spring</groupId>
+          <artifactId>okta-spring-boot-starter</artifactId>
+          <version>2.1.5</version>
+      </dependency>
+
       <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-validation</artifactId>
@@ -90,6 +107,11 @@
       <dependency>
           <groupId>org.springdoc</groupId>
           <artifactId>springdoc-openapi-data-rest</artifactId>
+          <version>${springdoc.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springdoc</groupId>
+          <artifactId>springdoc-openapi-security</artifactId>
           <version>${springdoc.version}</version>
       </dependency>
 
@@ -149,7 +171,11 @@
           <version>2.23.0</version>
           <scope>test</scope>
       </dependency>
-
+      <dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>2.11.0</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>cake-manager</finalName>
@@ -187,7 +213,6 @@
                         <inputSpec>
                             ${project.parent.basedir}/api/openapi.yaml
                         </inputSpec>
-<!--                        <inputSpec>${project.basedir}/src/main/resources/static/openapi.yaml</inputSpec>-->
                         <generatorName>spring</generatorName>
                         <library>spring-boot</library>
                         <apiPackage>${project.groupId}.manager.cake.api</apiPackage>
@@ -259,6 +284,11 @@
                     </goals>
                 </execution>
             </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.4.0.905</version>
         </plugin>
     </plugins>
   </build>

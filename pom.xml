@@ -6,6 +6,7 @@
     <modules>
         <!--		<module>authorization-server</module>-->
         <module>cake-manager-server</module>
+        <module>cake-manager-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

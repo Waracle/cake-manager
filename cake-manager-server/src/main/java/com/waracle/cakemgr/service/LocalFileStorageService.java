@@ -5,8 +5,7 @@ import com.waracle.cakemgr.exception.InvalidCakeException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,12 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Setter
@@ -66,27 +63,19 @@ public class LocalFileStorageService implements FileStorageService {
     }
 
     /**
-     * Loads a resource with filepath given as a URI
-     * @param filepath
+     * Loads a file as a byte array
      * @return
      */
     @Override
-    public Optional<Resource> load(String filepath) {
-        Resource resource;
+    public byte[] load(String filename) {
+        byte[] image = new byte[0];
         try {
-            resource = new UrlResource(new URI(filepath));
-
-        } catch (Exception e) {
-            log.error(e.getMessage(),e.fillInStackTrace());
-            throw new RuntimeException("Error: " + e.getMessage(),e);
+            Path path = folder.resolve(Paths.get(Objects.requireNonNull(filename)));
+            image = FileUtils.readFileToByteArray(path.toFile());
+        } catch (IOException e) {
+            log.error("IOException occurred whilst reading file: " + filename, e);
         }
-
-        if (resource.exists() || resource.isReadable()) {
-            return Optional.of(resource);
-        } else {
-            log.error("File not found " + filepath);
-        }
-        return Optional.empty();
+        return image;
     }
 
     @Override

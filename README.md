@@ -21,7 +21,36 @@
 * Java IDE, you can use any IDE whichever you want, examples:
     * IntelliJ
     * Eclipse
-    
+
+## Generate access token
+* Open up Postman and create a new POST request with Authorisation set to Basic, and use the following:
+  * url: `https://dev-47242716.okta.com/oauth2/default/v1/token`
+  * headers:
+    * `accept: application/json`
+    * `content-type:application/x-www-form-urlencoded`
+  * Body:
+    * `grant_type:client_credentials`
+    *`scope:custom`
+  * Username: `0oa5akb70onDcIo6a5d7`
+  * Password: `w0dGDoitYco23G1sKsZqlnD1A1ZpNbct8kaKuUnu`
+
+* Then Click Send and should get a json response with a user token which can be fed into the headers (e.g. `Authorization: Bearer eyJraWQiOi...KhA4B2NqfYQ` ) of cakes manager endpoints.
+
+The Username/ Secrets should be kept in a Secrets Manager, but for demo purposes it is being exposed.
+
+Note when invoking a POST request in Postman 
+
+## Start Jenkins
+* Start the jenkins container:
+`docker-compose up -d`
+ ### Initial Setup
+* Get the initial admin password:
+`docker exec jnkins cat /var/jenkins_home/secrets/initialAdminPassword`
+
+* Confirm the jenkins container is running:
+`docker ps`
+* Navigate to localhost:8085 and enter admin password from above to unlock jenkins
+* On the next page select `Install Suggested Plugins` and wait for the plugins to install
 
 ## Configure Jenkins pipeline
 
