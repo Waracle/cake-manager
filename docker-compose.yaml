@@ -1,9 +1,23 @@
 version: '3.7'
 services:
+  dind:
+    image: docker:dind
+    user: root
+    privileged: true
+    container_name: dind
+    expose:
+      - 2375
+    networks:
+      - jenkins_dind
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+
   jenkins:
     image: jenkins/jenkins:lts
     privileged: true
     user: root
+    depends_on:
+      - dind
     ports:
       - 8085:8080
       - 50000:50000
@@ -12,3 +26,11 @@ services:
       - ~/jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
+    environment:
+      DOCKER_HOST: "tcp://dind:2375"
+    networks:
+      - jenkins_dind
+
+networks:
+  jenkins_dind:
+    driver: bridge

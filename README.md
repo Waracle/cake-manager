@@ -21,6 +21,7 @@
 * Java IDE, you can use any IDE whichever you want, examples:
     * IntelliJ
     * Eclipse
+* Docker Desktop
 
 ## Generate access token
 * Open up Postman and create a new POST request with Authorisation set to Basic, and use the following:
