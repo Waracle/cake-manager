@@ -31,11 +31,27 @@ Original Project Info
 
 To run a server locally execute the following command:
 
-`mvn jetty:run`
+1# Run CakeManagerApplication class in any IDE will start the API from IDE.
+2#
+    a. Compile application using 'mvn clean install' command.
+    b. run jar file using 'java -jar cake-manager-1.0.0-SNAPSHOT.jar'
+3# Once the application is compiled and jar is ready create docker build and run from docker using below commands.
+    a. docker build -t cake-manager .
+    b. docker run -p 8282:8282 cake-manager
+
+Note: 2 & 3 methods should run from application context from command terminal.
+
 
 and access the following URL:
 
-`http://localhost:8282/`
+API testing and see sample JSON schema.
+http://localhost:8282/swagger-ui.html
+
+API usage for Integration
+GET REQUEST: will display all the cakes list available in the system
+http://localhost:8282/cakes
+POST REQUEST: Alternatively system will allow to new cake entry to the system using post method using same endpoint.
+http://localhost:8282/cakes
 
 Feel free to change how the project is run, but clear instructions must be given in README
 You can use any IDE you like, so long as the project can build and run with Maven or Gradle.
@@ -54,4 +70,15 @@ share it with us.
 
 Please also keep a log of the changes you make as a text file and provide this to us with your submission.
 
-Good luck!
+Changes made:
+
+1. upgraded project to Spring boot 2.7 version
+2. Fixed issues in the existing implementation and API is now working
+3. created a new POST method to create new entries in the system.
+4. created a few unit tests to cover basic functionalities. Jacoco integrated to visualize test coverage can be find. In the target folder.
+5. Simple Docker file is created to build and test the API service.
+6. Integrated Swagger API to visualize and try out the API endpoints.
+7. Documentation updated for all public methods.
+8. YAML configuration added.
+9. project structure changed for easy access and readability.
+

@@ -1,12 +1,13 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.entity;
 
-import java.io.Serializable;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
-@Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
+@Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID")})
+@Validated
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
@@ -16,13 +17,13 @@ public class CakeEntity implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer employeeId;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
+    @Column(name = "EMAIL", nullable = false, length = 100)
     private String title;
 
-    @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
+    @Column(name = "FIRST_NAME", nullable = false, length = 100)
     private String description;
 
-    @Column(name = "LAST_NAME", unique = false, nullable = false, length = 300)
+    @Column(name = "LAST_NAME", nullable = false, length = 300)
     private String image;
 
     public String getTitle() {
