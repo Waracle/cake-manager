@@ -6,9 +6,9 @@ The developer assured us that some of the above is complete, but at the moment a
 returns a 404, so getting this working should be the first priority.
 
 Requirements:
-* By accessing the root of the server (/) it should be possible to list the cakes currently in the system. This must be presented in an acceptable format for a human to read.
+* By accessing the root of the server (/) it should be possible to list the cakes currently in the system. JSON would be an acceptable response format.
 
-* It must be possible for a human to add a new cake to the server.
+* It must be possible to add a new cake to the server.
 
 * By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of
 the cakes currently in the system as JSON data.
@@ -16,14 +16,18 @@ the cakes currently in the system as JSON data.
 * The /cakes endpoint must also allow new cakes to be created.
 
 Comments:
-* We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern.
-* Would be good to change the application to implement proper client-server separation via REST API.
+* We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern. If you wish to update the repo in this manner, feel free! An explanation of the benefits of doing so (and any downsides) can be discussed at interview.
+
+* Any other changes to improve the repo are appreciated (implementation of design patterns, seperation of concerns, ensuring the API follows REST principles etc)
 
 Bonus points:
-* Tests
-* Authentication via OAuth2
+* Add some suitable tests (unit/integration...)
+* Add some Authentication / Authorisation to the API
 * Continuous Integration via any cloud CI system
 * Containerisation
+
+Scope
+* Only the API and related code is in scope. No GUI of any kind is required
 
 
 Original Project Info
@@ -49,9 +53,6 @@ Submission
 
 Please provide your version of this project as a git repository (e.g. Github, BitBucket, etc).
 
-Alternatively, you can submit the project as a zip or gzip. Use Google Drive or some other file sharing service to
-share it with us.
-
-Please also keep a log of the changes you make as a text file and provide this to us with your submission.
+A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
