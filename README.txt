@@ -6,14 +6,13 @@ The developer assured us that some of the above is complete, but at the moment a
 returns a 404, so getting this working should be the first priority.
 
 Requirements:
-* By accessing the root of the server (/) it should be possible to list the cakes currently in the system. JSON would be an acceptable response format.
+* By accessing /cakes, it should be possible to list the cakes currently in the system. JSON would be an acceptable response format.
 
-* It must be possible to add a new cake to the server.
+* It must be possible to add a new cake.
 
-* By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of
-the cakes currently in the system as JSON data.
+* It must be possible to update an existing cake.
 
-* The /cakes endpoint must also allow new cakes to be created.
+* It must be possible to delete an existing cake.
 
 Comments:
 * We feel like the software stack used by the original developer is quite outdated, it would be good to migrate the entire application to something more modern. If you wish to update the repo in this manner, feel free! An explanation of the benefits of doing so (and any downsides) can be discussed at interview.
