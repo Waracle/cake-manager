@@ -1,8 +1,9 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemanager;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.waracle.cakemanager.entity.CakeEntity;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
