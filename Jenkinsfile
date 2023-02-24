@@ -1,8 +1,9 @@
 pipeline {
     agent any
     environment {
+        // Update below details to push the image to docker repository
         DOCKER_REGISTRY = ""
-        DOCKER_IMAGE_NAME = "cakemanager"
+        DOCKER_IMAGE_NAME = "cake-manager"
         DOCKER_IMAGE_TAG = "latest"
         USERNAME = "<username>"
         PASSWORD = "<password>"
