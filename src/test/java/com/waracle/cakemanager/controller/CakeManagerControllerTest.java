@@ -75,6 +75,43 @@ class CakeManagerControllerTest {
                 .andExpect(jsonPath("$.image").value("image2"));
     }
 
+    @Test
+    public void whenDeleteRequestToCakeManager_thenSuccessResponse() throws Exception {
+        String file_path = "src/main/resources/input/cake_sample.json";
+        File file = new File(file_path);
+        ObjectMapper mapper = new ObjectMapper();
+        CakeEntity cakeEntity = mapper.readValue(file, new TypeReference<CakeEntity>() {
+        });
+        String cake = mapper.writeValueAsString(cakeEntity);
+        when(cakeService.deleteCakeById(Mockito.any())).thenReturn(cakeEntity);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/cakes/cake/1")
+                        .content(cake)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.cakeId").value(1))
+                .andExpect(jsonPath("$.title").value("Plum Cake"));
+    }
+    @Test
+    public void whenUpdateRequestToCakeManager_thenSuccessResponse() throws Exception {
+        String file_path = "src/main/resources/input/cake_sample.json";
+        File file = new File(file_path);
+        ObjectMapper mapper = new ObjectMapper();
+        CakeEntity cakeEntity = mapper.readValue(file, new TypeReference<CakeEntity>(){});
+        cakeEntity.setTitle("Chocolate Cake");
+        String cake = mapper.writeValueAsString(cakeEntity);
+        when(cakeService.updateCake(Mockito.anyLong(), Mockito.any(CakeEntity.class))).thenReturn(cakeEntity);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/cakes/cake/1")
+                        .content(cake)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.cakeId").value(1))
+                .andExpect(jsonPath("$.title").value("Chocolate Cake"));
+    }
+
     private CakeEntity getPlumCake() {
         return CakeEntity.builder()
                 .cakeId(1L).title("Plum Cake").description("Christmas cake").image("image1")
