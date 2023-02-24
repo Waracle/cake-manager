@@ -55,3 +55,29 @@ Please provide your version of this project as a git repository (e.g. Github, Bi
 A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
+
+Changes Made - to cover the given requirement:
+==============================================
+
+1.Upgraded the application to spring boot 2.7.9 and added required dependencies to run application as spring boot application.
+2.Added rest controller and required classes and functionalities to create,update,delete and get the cakes on the system.
+3.Handled the exceptional scenarios using global exception handler to respond back to client with the right informations.
+4.Added required test cases to cover different scenarios and code coverage - used jacoco plugin
+5.Used In memory database for holding the cake details.
+
+Tools and Technology Used:
+--------------------------
+1.Spring Boot
+2.Java 11
+3.IntelliJ Idea - Any IDE can be used
+4.Github - Repository
+4.Maven - Build
+5.Spring Junit 5 and mockito - For unit testing
+6.
+
+Build and Run command :
+=======================
+1. Go to the project folder
+2. Run mvn clean install
+3. After successful build run mvn spring-boot:run
+4. Use base url http://localhost:8090/cakes to access api

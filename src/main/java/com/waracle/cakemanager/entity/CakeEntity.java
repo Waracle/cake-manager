@@ -7,28 +7,27 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Builder
-@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "CakeEntity")
+@Table(name = "CAKE_DETAILS")
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
-    private Integer employeeId;
+    private Long cakeId;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
+    @Column(name = "TITLE", nullable = false, length = 100)
     private String title;
 
-    @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
+    @Column(name = "DESCRIPTION", nullable = false, length = 100)
     private String description;
 
-    @Column(name = "LAST_NAME", unique = false, nullable = false, length = 300)
+    @Column(name = "IMAGE", nullable = false, length = 300)
     private String image;
 
 
