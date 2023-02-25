@@ -39,7 +39,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-        images: sheejavr/cake-manager
+          images: sheejavr/cake-manager
 
         # Login to DockerHub registry - Dont push to docker hub for all Pull Request
         # https://github.com/docker/login-action
