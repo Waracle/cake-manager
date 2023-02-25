@@ -24,11 +24,6 @@ public class CakeManagerController {
         return new ResponseEntity<List<CakeEntity>>((List<CakeEntity>) cakeEntityList, HttpStatus.OK);
     }
 
-    @GetMapping("/cake/{id}")
-    public ResponseEntity<CakeEntity> getCakeById(@PathVariable("id") Long id) throws CakeNotAvailableException {
-        return new ResponseEntity<CakeEntity>(cakeService.getCakeById(id), HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<CakeEntity> createCake(@RequestBody CakeEntity cake) throws CakeAlreadyPresentException {
         CakeEntity savedCake = cakeService.saveCake(cake);
@@ -36,8 +31,21 @@ public class CakeManagerController {
 
     }
 
+    @PutMapping
+    public ResponseEntity<CakeEntity> updateCake(@RequestBody CakeEntity cake) {
+        ResponseEntity responseEntity;
+        CakeEntity updatedCake = cakeService.updateCake(cake.getCakeId(), cake);
+        responseEntity = new ResponseEntity<CakeEntity>(updatedCake, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @GetMapping("/cake/{id}")
+    public ResponseEntity<CakeEntity> getCakeById(@PathVariable("id") Long id) throws CakeNotAvailableException {
+        return new ResponseEntity<CakeEntity>(cakeService.getCakeById(id), HttpStatus.OK);
+    }
+
     @PutMapping("cake/{id}")
-    public ResponseEntity<CakeEntity> updateCake(@PathVariable("id") Long id, @RequestBody CakeEntity cake) {
+    public ResponseEntity<CakeEntity> updateCakeById(@PathVariable("id") Long id, @RequestBody CakeEntity cake) {
         ResponseEntity responseEntity;
         CakeEntity updatedCake = cakeService.updateCake(id, cake);
         responseEntity = new ResponseEntity<CakeEntity>(updatedCake, HttpStatus.OK);
@@ -45,7 +53,7 @@ public class CakeManagerController {
     }
 
     @DeleteMapping("cake/{id}")
-    public ResponseEntity<CakeEntity> deleteCake(@PathVariable("id") Long id) {
+    public ResponseEntity<CakeEntity> deleteCakeById(@PathVariable("id") Long id) {
         CakeEntity deletedCake = cakeService.deleteCakeById(id);
         ResponseEntity responseEntity = new ResponseEntity<CakeEntity>(deletedCake, HttpStatus.OK);
         return responseEntity;

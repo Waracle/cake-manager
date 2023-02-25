@@ -60,20 +60,24 @@ Changes Made - to cover the given requirement:
 ==============================================
 
 1.Upgraded the application to spring boot 2.7.9 and added required dependencies to run application as spring boot application.
-2.Added rest controller and required classes and functionalities to create,update,delete and get the cakes on the system.
-3.Handled the exceptional scenarios using global exception handler to respond back to client with the right informations.
+2.Added rest controller as the handler for the api entry point and added other required classes and functionalities
+  to create,update,delete and get the cakes from the system.
+3.Handled the exceptional scenarios using global exception handler/controller advice to respond back
+  to client with the right informations incase of exceptions.
 4.Added required test cases to cover different scenarios and code coverage - used jacoco plugin
-5.Used In memory database for holding the cake details.
+5.Used In memory h2 database for persisting the cake details.
+6.Configured Continuous Integration using GitHub Actions with the help of ci.yml which contains jobs and steps for build
+
 
 Tools and Technology Used:
 --------------------------
 1.Spring Boot
 2.Java 11
 3.IntelliJ Idea - Any IDE can be used
-4.Github - Repository
+4.Github - Repository and Continuous Integration
 4.Maven - Build
 5.Spring Junit 5 and mockito - For unit testing
-6.
+6.Docker
 
 Build and Run command :
 =======================
@@ -81,3 +85,16 @@ Build and Run command :
 2. Run mvn clean install
 3. After successful build run mvn spring-boot:run
 4. Use base url http://localhost:8090/cakes to access api
+
+Continuous Integration:
+=======================
+1. Used GitHub Actions to perform CI by configuring ci.yml file
+2. Steps added in ci.yml file are :
+   a. Checkout Code from git
+   b. Setup Java version 17
+   c. Setup maven
+   d. Build using maven
+   e. Build docker image and Push the docker image into Docker Hub repo
+
+   Above Continuous Integration will be triggered only for either a push directly to master branch or a pull request to master branch.
+
