@@ -103,6 +103,24 @@ class CakeManagerControllerTest {
         String cake = mapper.writeValueAsString(cakeEntity);
         when(cakeService.updateCake(Mockito.anyLong(), Mockito.any(CakeEntity.class))).thenReturn(cakeEntity);
         mockMvc.perform(MockMvcRequestBuilders
+                        .put("/cakes")
+                        .content(cake)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.cakeId").value(1))
+                .andExpect(jsonPath("$.title").value("Chocolate Cake"));
+    }
+    @Test
+    public void whenUpdateRequestToCakeManagerByCakeId_thenSuccessResponse() throws Exception {
+        String file_path = "src/main/resources/input/cake_sample.json";
+        File file = new File(file_path);
+        ObjectMapper mapper = new ObjectMapper();
+        CakeEntity cakeEntity = mapper.readValue(file, new TypeReference<CakeEntity>(){});
+        cakeEntity.setTitle("Chocolate Cake");
+        String cake = mapper.writeValueAsString(cakeEntity);
+        when(cakeService.updateCake(Mockito.anyLong(), Mockito.any(CakeEntity.class))).thenReturn(cakeEntity);
+        mockMvc.perform(MockMvcRequestBuilders
                         .put("/cakes/cake/1")
                         .content(cake)
                         .contentType(MediaType.APPLICATION_JSON))
