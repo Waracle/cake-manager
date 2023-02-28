@@ -33,7 +33,7 @@ to client with the right informations incase of exceptions.
 Tools and Technology Used:
 ------------------------
 1. Spring Boot
-2. Java 11
+2. Java 17
 3. Maven 3.5.3 
 4. IntelliJ Idea - Any IDE can be used
 5. Github - For repository and Continuous Integration
