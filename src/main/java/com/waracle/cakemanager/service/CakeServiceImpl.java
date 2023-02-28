@@ -4,6 +4,7 @@ import com.waracle.cakemanager.entity.CakeEntity;
 import com.waracle.cakemanager.exception.CakeAlreadyPresentException;
 import com.waracle.cakemanager.exception.CakeNotAvailableException;
 import com.waracle.cakemanager.repository.CakeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CakeServiceImpl implements CakeService {
 
     @Autowired
@@ -20,6 +22,7 @@ public class CakeServiceImpl implements CakeService {
     public List<CakeEntity> getAllCakes() throws CakeNotAvailableException {
         List<CakeEntity> cakeList = cakeRepository.findAll();
         if (cakeList.isEmpty()) {
+            log.info("Cake list is empty");
             throw new CakeNotAvailableException();
         }
         return cakeList;
@@ -29,6 +32,7 @@ public class CakeServiceImpl implements CakeService {
     public CakeEntity getCakeById(Long id) throws CakeNotAvailableException {
         Optional<CakeEntity> cakeEntityOptional = cakeRepository.findById(id);
         if (cakeEntityOptional.isEmpty()) {
+            log.info("Cake list is empty");
             throw new CakeNotAvailableException();
         }
         return cakeEntityOptional.get();
@@ -37,6 +41,7 @@ public class CakeServiceImpl implements CakeService {
     @Override
     public CakeEntity saveCake(CakeEntity cake) throws CakeAlreadyPresentException {
         if (null != cake.getCakeId() && cakeRepository.existsById(cake.getCakeId())) {
+            log.info("Cake Already present ");
             throw new CakeAlreadyPresentException();
         }
         CakeEntity cakeEntity = cakeRepository.save(cake);
@@ -57,7 +62,7 @@ public class CakeServiceImpl implements CakeService {
         CakeEntity cake;
         Optional optional = cakeRepository.findById(id);
         if (optional.isPresent()) {
-            cake = cakeRepository.findById(id).get();
+            cake = (CakeEntity) optional.get();
             cakeRepository.deleteById(id);
         } else {
             throw new CakeNotAvailableException();
