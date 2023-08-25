@@ -55,3 +55,15 @@ Please provide your version of this project as a git repository (e.g. Github, Bi
 A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
+
+
+Notes from Phill
+==========
+
+Requires Java 20 to run.
+If running in intelliJ it requires lombok annotations to be enabled.
+I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
+Flyway migration scripts run automatically on startup
+
+Next steps:
+Add pagination and sorting to getAll endpoint
