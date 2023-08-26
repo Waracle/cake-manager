@@ -81,5 +81,6 @@ class CakeServiceTest {
 
 		assertThrows(IllegalArgumentException.class, () -> cakeService.getCakeById(9L));
 	}
+
 	// endregion
 }

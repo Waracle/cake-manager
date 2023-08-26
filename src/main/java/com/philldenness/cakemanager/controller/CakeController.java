@@ -25,6 +25,7 @@ public class CakeController {
     }
 
 	@GetMapping("/{id}")
+	@Operation(summary = "Get cake by its ID")
 	public CakeDTO getCakeById(@PathVariable Long id) {
 		return cakeService.getCakeById(id);
 	}
