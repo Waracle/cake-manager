@@ -62,15 +62,30 @@ class CakeControllerTest {
 
 	// region create cake
 	@Test
-	void shouldCallServiceWithCakePayload() {
+	void shouldCallCreateWithCakePayload() {
 		CakeDTO expectedCake = new CakeDTO(1L, "title", "desc", "image");
 		CakeRequest payloadCake = new CakeRequest( "title", "desc", "image");
 		when(cakeService.create(any(CakeRequest.class))).thenReturn(expectedCake);
 
-		CakeDTO cakeDTO = cakeController.createCake(payloadCake);
+		CakeDTO createdCake = cakeController.createCake(payloadCake);
 
 		verify(cakeService).create(payloadCake);
-		assertEquals(expectedCake, cakeDTO);
+		assertEquals(expectedCake, createdCake);
+	}
+	// endregion
+
+	// region update cake
+	@Test
+	void shouldCallUpdateWithCakePayload() {
+		Long id = 1L;
+		CakeDTO expectedCake = new CakeDTO(id, "title", "desc", "image");
+		CakeRequest payloadCake = new CakeRequest( "title", "desc", "image");
+		when(cakeService.update(anyLong(), any(CakeRequest.class))).thenReturn(expectedCake);
+
+		CakeDTO updatedCake = cakeController.updateCake(id, payloadCake);
+
+		verify(cakeService).update(id, payloadCake);
+		assertEquals(expectedCake, updatedCake);
 	}
 	// endregion
 }

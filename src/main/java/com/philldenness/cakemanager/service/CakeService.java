@@ -37,4 +37,16 @@ public class CakeService {
 		CakeEntity savedEntity = repository.save(cakeEntity);
 		return mapper.toDTO(savedEntity);
 	}
+
+	// TODO Maybe transactions?
+	public CakeDTO update(Long id, CakeRequest toSave) {
+		CakeEntity oldEntity = repository.findById(id).orElseThrow(() -> {
+			log.warn("Could not find cake to update", keyValue("cakeId", id));
+			return new IllegalArgumentException();
+		});
+		CakeEntity newPartialEntity = mapper.toEntity(toSave);
+		newPartialEntity.setId(oldEntity.getId());
+		CakeEntity savedEntity = repository.save(newPartialEntity);
+		return mapper.toDTO(savedEntity);
+	}
 }

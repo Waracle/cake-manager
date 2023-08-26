@@ -87,7 +87,7 @@ class CakeServiceTest {
 
 	// region create cake
 	@Test
-	void shouldPassDtoToMapper() {
+	void shouldPassCreateRequestToMapper() {
 		CakeEntity cakeEntity = mock(CakeEntity.class);
 		CakeEntity savedEntity = mock(CakeEntity.class);
 		CakeRequest toSave = mock(CakeRequest.class);
@@ -101,6 +101,35 @@ class CakeServiceTest {
 
 		verify(cakeRepository).save(cakeEntity);
 		assertEquals(fromEntity, savedCake);
+	}
+	// endregion
+
+	// region update cake
+	@Test
+	void shouldPassUpdateRequestToMapper() {
+		Long id = 1L;
+		CakeEntity newEntity = mock(CakeEntity.class);
+		CakeEntity oldEntity = mock(CakeEntity.class);
+		CakeEntity newSavedEntity = mock(CakeEntity.class);
+		CakeRequest toSave = mock(CakeRequest.class);
+		CakeDTO fromEntity = mock(CakeDTO.class);
+
+		when(cakeMapper.toEntity(toSave)).thenReturn(newEntity);
+		when(cakeRepository.findById(id)).thenReturn(Optional.of(oldEntity));
+		when(cakeRepository.save(newEntity)).thenReturn(newSavedEntity);
+		when(cakeMapper.toDTO(newSavedEntity)).thenReturn(fromEntity);
+
+		CakeDTO savedCake = cakeService.update(id, toSave);
+
+		verify(cakeRepository).save(newEntity);
+		assertEquals(fromEntity, savedCake);
+	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenUpdateIdIsNotFound() {
+		when(cakeRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+		assertThrows(IllegalArgumentException.class, () -> cakeService.update(9L, mock(CakeRequest.class)));
 	}
 	// endregion
 }

@@ -15,24 +15,34 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CreateCakeIT {
+public class UpdateCakeIT {
 
 	@Autowired
 	private MockMvc mvc;
 
 	@Test
-	void testValidPostCreatesCake() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/cakes")
+	void testValidUpdateCake() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.put("/cakes/1")
 						.content(asJsonString(new CakeRequest("new title", "new description", "new image")))
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated())
-				.andExpect(content().json("{id: 21, title: 'new title', description: 'new description', image: 'new image'}"));
+				.andExpect(status().isOk())
+				.andExpect(content().json("{id: 1, title: 'new title', description: 'new description', image: 'new image'}"));
 	}
 
 	@Test
+	void testUpdateCakeReturns404WhenIdDoesntExist() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.put("/cakes/99")
+						.content(asJsonString(new CakeRequest("new title", "new description", "new image")))
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
+	}
+
+
+	@Test
 	void testInvalidPostCreatesCakeWithNullTitle() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/cakes")
+		mvc.perform(MockMvcRequestBuilders.put("/cakes/1")
 						.content(asJsonString(new CakeRequest(null, "new description", "new image")))
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON))
@@ -41,7 +51,7 @@ public class CreateCakeIT {
 
 	@Test
 	void testInvalidPostCreatesCakeWithNullDescription() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/cakes")
+		mvc.perform(MockMvcRequestBuilders.put("/cakes/1")
 						.content(asJsonString(new CakeRequest("new title", null, "new image")))
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON))
@@ -50,7 +60,7 @@ public class CreateCakeIT {
 
 	@Test
 	void testInvalidPostCreatesCakeWithNullImage() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/cakes")
+		mvc.perform(MockMvcRequestBuilders.put("/cakes/1")
 						.content(asJsonString(new CakeRequest("new title", "new description", null)))
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON))
