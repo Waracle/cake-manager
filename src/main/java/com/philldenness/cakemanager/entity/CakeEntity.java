@@ -16,7 +16,6 @@ public class CakeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long employeeId;
 	private String title;
 	private String description;
 	private String image;

@@ -65,5 +65,8 @@ If running in intelliJ it requires lombok annotations to be enabled.
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
 Flyway migration scripts run automatically on startup
 
+Build with integration tests command: mvn verify -Pfailsafe
+Swagger is on http://localhost:8080/swagger-ui/index.html
+
 Next steps:
 Add pagination and sorting to getAll endpoint
