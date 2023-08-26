@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ class CakeControllerTest {
 	// region allCakes
 	@Test
 	void shouldReturnAllCakesFromCakeService() {
-		List<CakeDTO> cakes = List.of(new CakeDTO(1L, "title", "description", "image"));
+		List<CakeDTO> cakes = List.of(mock(CakeDTO.class));
 		when(cakeService.getCakes()).thenReturn(cakes);
 
 		List<CakeDTO> cakeList = cakeController.getAllCakes();
@@ -43,7 +42,7 @@ class CakeControllerTest {
 	@Test
 	void shouldCallServiceWithPathIdAndReturnCakeDto() {
 		Long cakeId = 1L;
-		CakeDTO expectedCake = new CakeDTO(cakeId, "title", "description", "image");
+		CakeDTO expectedCake = mock(CakeDTO.class);
 		when(cakeService.getCakeById(cakeId)).thenReturn(expectedCake);
 
 		CakeDTO cakeDTO = cakeController.getCakeById(cakeId);
@@ -52,7 +51,7 @@ class CakeControllerTest {
 	}
 
 	@Test
-	void shouldThrowIllegalArgumentExceptionWhenServiceThrowsIllegalArgumentException() {
+	void shouldThrowIllegalArgumentExceptionWhenGetByIdThrowsIllegalArgumentException() {
 		when(cakeService.getCakeById(anyLong())).thenThrow(IllegalArgumentException.class);
 
 		assertThrows(IllegalArgumentException.class, () -> cakeController.getCakeById(9L));
@@ -63,8 +62,8 @@ class CakeControllerTest {
 	// region create cake
 	@Test
 	void shouldCallCreateWithCakePayload() {
-		CakeDTO expectedCake = new CakeDTO(1L, "title", "desc", "image");
-		CakeRequest payloadCake = new CakeRequest( "title", "desc", "image");
+		CakeDTO expectedCake = mock(CakeDTO.class);
+		CakeRequest payloadCake = mock(CakeRequest.class);
 		when(cakeService.create(any(CakeRequest.class))).thenReturn(expectedCake);
 
 		CakeDTO createdCake = cakeController.createCake(payloadCake);
@@ -72,20 +71,51 @@ class CakeControllerTest {
 		verify(cakeService).create(payloadCake);
 		assertEquals(expectedCake, createdCake);
 	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenCreateThrowsIllegalArgumentException() {
+		when(cakeService.create(any(CakeRequest.class))).thenThrow(IllegalArgumentException.class);
+
+		assertThrows(IllegalArgumentException.class, () -> cakeController.createCake(mock(CakeRequest.class)));
+	}
 	// endregion
 
 	// region update cake
 	@Test
 	void shouldCallUpdateWithCakePayload() {
 		Long id = 1L;
-		CakeDTO expectedCake = new CakeDTO(id, "title", "desc", "image");
-		CakeRequest payloadCake = new CakeRequest( "title", "desc", "image");
+		CakeDTO expectedCake = mock(CakeDTO.class);
+		CakeRequest payloadCake = mock(CakeRequest.class);
 		when(cakeService.update(anyLong(), any(CakeRequest.class))).thenReturn(expectedCake);
 
 		CakeDTO updatedCake = cakeController.updateCake(id, payloadCake);
 
 		verify(cakeService).update(id, payloadCake);
 		assertEquals(expectedCake, updatedCake);
+	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenUpdateThrowsIllegalArgumentException() {
+		when(cakeService.update(anyLong(), any(CakeRequest.class))).thenThrow(IllegalArgumentException.class);
+
+		assertThrows(IllegalArgumentException.class, () -> cakeController.updateCake(1L, mock(CakeRequest.class)));
+	}
+	// endregion
+
+	// region delete cake
+	@Test
+	void shouldCallDeleteWithId() {
+		Long id = 1L;
+		cakeController.deleteCake(id);
+
+		verify(cakeService).delete(id);
+	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenDeleteThrowsIllegalArgumentException() {
+		doThrow(IllegalArgumentException.class).when(cakeService).delete(anyLong());
+
+		assertThrows(IllegalArgumentException.class, () -> cakeController.deleteCake(1L));
 	}
 	// endregion
 }

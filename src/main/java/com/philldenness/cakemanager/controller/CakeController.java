@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,5 +76,17 @@ public class CakeController {
 					content = @Content)})
 	public CakeDTO updateCake(@PathVariable Long id, @Valid @RequestBody CakeRequest payloadCake) {
 		return cakeService.update(id, payloadCake);
+	}
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Deleted the cake",
+					content = {@Content(mediaType = "application/json",
+							schema = @Schema(implementation = CakeDTO.class))}),
+			@ApiResponse(responseCode = "404", description = "Cake not found",
+					content = @Content)})
+	public void deleteCake(@PathVariable Long id) {
+		cakeService.delete(id);
 	}
 }

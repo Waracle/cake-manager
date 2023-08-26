@@ -49,4 +49,12 @@ public class CakeService {
 		CakeEntity savedEntity = repository.save(newPartialEntity);
 		return mapper.toDTO(savedEntity);
 	}
+
+	public void delete(Long id) {
+		if (!repository.existsById(id)) {
+			log.warn("Could not find cake to delete", keyValue("cakeId", id));
+			throw new IllegalArgumentException();
+		}
+		repository.deleteById(id);
+	}
 }

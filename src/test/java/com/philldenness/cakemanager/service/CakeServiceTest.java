@@ -33,7 +33,7 @@ class CakeServiceTest {
 
 	// region all cakes
 	@Test
-	void shouldCallMapperWithEntity() {
+	void shouldMapDtoForEachWithEntity() {
 		CakeDTO cakeDTO1 = mock(CakeDTO.class);
 		CakeDTO cakeDTO2 = mock(CakeDTO.class);
 		CakeEntity cakeEntity1 = mock(CakeEntity.class);
@@ -130,6 +130,25 @@ class CakeServiceTest {
 		when(cakeRepository.findById(anyLong())).thenReturn(Optional.empty());
 
 		assertThrows(IllegalArgumentException.class, () -> cakeService.update(9L, mock(CakeRequest.class)));
+	}
+	// endregion
+
+	// region delete cake
+	@Test
+	void shouldCallRepoDeleteByIdWithSuppliedId() {
+		Long id = 1L;
+		when(cakeRepository.existsById(anyLong())).thenReturn(true);
+
+		cakeService.delete(id);
+
+		verify(cakeRepository).deleteById(id);
+	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenDeleteIdIsNotFound() {
+		when(cakeRepository.existsById(anyLong())).thenReturn(false);
+
+		assertThrows(IllegalArgumentException.class, () -> cakeService.delete(9L));
 	}
 	// endregion
 }
