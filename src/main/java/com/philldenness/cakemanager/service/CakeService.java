@@ -12,6 +12,7 @@ import com.philldenness.cakemanager.repository.CakeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -38,7 +39,7 @@ public class CakeService {
 		return mapper.toDTO(savedEntity);
 	}
 
-	// TODO Maybe transactions?
+	@Transactional
 	public CakeDTO update(Long id, CakeRequest toSave) {
 		CakeEntity oldEntity = repository.findById(id).orElseThrow(() -> {
 			log.warn("Could not find cake to update", keyValue("cakeId", id));
@@ -46,10 +47,11 @@ public class CakeService {
 		});
 		CakeEntity newPartialEntity = mapper.toEntity(toSave);
 		newPartialEntity.setId(oldEntity.getId());
-		CakeEntity savedEntity = repository.save(newPartialEntity);
-		return mapper.toDTO(savedEntity);
+
+		return mapper.toDTO(repository.save(newPartialEntity));
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
 			log.warn("Could not find cake to delete", keyValue("cakeId", id));

@@ -3,7 +3,12 @@ package com.philldenness.cakemanager.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 
 @ExtendWith(MockitoExtension.class)
 class CakeServiceTest {
@@ -47,6 +53,13 @@ class CakeServiceTest {
 		verify(cakeMapper, times(1)).toDTO(cakeEntity1);
 		verify(cakeMapper, times(1)).toDTO(cakeEntity2);
 		assertEquals(List.of(cakeDTO1, cakeDTO2), cakes);
+	}
+
+	@Test
+	void shouldPropagateExceptionFromFindAll() {
+		when(cakeRepository.findAll()).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class, () -> cakeService.getCakes());
 	}
 
 	// endregion
@@ -83,6 +96,12 @@ class CakeServiceTest {
 		assertThrows(IllegalArgumentException.class, () -> cakeService.getCakeById(9L));
 	}
 
+	@Test
+	void shouldPropagateExceptionFromFindById() {
+		when(cakeRepository.findById(anyLong())).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class, () -> cakeService.getCakeById(1L));
+	}
 	// endregion
 
 	// region create cake
@@ -101,6 +120,17 @@ class CakeServiceTest {
 
 		verify(cakeRepository).save(cakeEntity);
 		assertEquals(fromEntity, savedCake);
+	}
+
+	@Test
+	void shouldPropagateExceptionFromSave() {
+		CakeRequest toSave = mock(CakeRequest.class);
+		when(cakeMapper.toEntity(toSave)).thenReturn(mock(CakeEntity.class));
+		when(cakeRepository.save(any(CakeEntity.class))).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class,
+				() -> cakeService.create(toSave)
+		);
 	}
 	// endregion
 
@@ -131,6 +161,26 @@ class CakeServiceTest {
 
 		assertThrows(IllegalArgumentException.class, () -> cakeService.update(9L, mock(CakeRequest.class)));
 	}
+
+	@Test
+	void shouldPropagateExceptionWhenFindByIdThrowsException() {
+		when(cakeRepository.findById(anyLong())).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class, () -> cakeService.update(1L, mock(CakeRequest.class)));
+	}
+
+	@Test
+	void shouldPropagateExceptionWhenSaveThrowsException() {
+		CakeEntity newEntity = mock(CakeEntity.class);
+		CakeEntity oldEntity = mock(CakeEntity.class);
+		CakeRequest toSave = mock(CakeRequest.class);
+
+		when(cakeMapper.toEntity(any(CakeRequest.class))).thenReturn(newEntity);
+		when(cakeRepository.findById(anyLong())).thenReturn(Optional.of(oldEntity));
+		when(cakeRepository.save(any(CakeEntity.class))).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class, () -> cakeService.update(1L, toSave));
+	}
 	// endregion
 
 	// region delete cake
@@ -149,6 +199,27 @@ class CakeServiceTest {
 		when(cakeRepository.existsById(anyLong())).thenReturn(false);
 
 		assertThrows(IllegalArgumentException.class, () -> cakeService.delete(9L));
+	}
+
+	@Test
+	void shouldPropagateExceptionFromDelete() {
+		Long id = 1L;
+		when(cakeRepository.existsById(anyLong())).thenReturn(true);
+		doThrow(mock(InvalidDataAccessResourceUsageException.class)).when(cakeRepository).deleteById(anyLong());
+
+		assertThrows(InvalidDataAccessResourceUsageException.class,
+				() -> cakeService.delete(id)
+		);
+	}
+
+	@Test
+	void shouldPropagateExceptionFromExistsById() {
+		Long id = 1L;
+		when(cakeRepository.existsById(anyLong())).thenThrow(mock(InvalidDataAccessResourceUsageException.class));
+
+		assertThrows(InvalidDataAccessResourceUsageException.class,
+				() -> cakeService.delete(id)
+		);
 	}
 	// endregion
 }

@@ -46,7 +46,7 @@ public class CakeController {
 					content = @Content),
 			@ApiResponse(responseCode = "404", description = "Cake not found",
 					content = @Content)})
-	public CakeDTO getCakeById(@PathVariable Long id) {
+	public CakeDTO getCakeById(@PathVariable long id) {
 		return cakeService.getCakeById(id);
 	}
 
@@ -74,7 +74,7 @@ public class CakeController {
 					content = @Content),
 			@ApiResponse(responseCode = "404", description = "Cake not found",
 					content = @Content)})
-	public CakeDTO updateCake(@PathVariable Long id, @Valid @RequestBody CakeRequest payloadCake) {
+	public CakeDTO updateCake(@PathVariable long id, @Valid @RequestBody CakeRequest payloadCake) {
 		return cakeService.update(id, payloadCake);
 	}
 
@@ -86,7 +86,7 @@ public class CakeController {
 							schema = @Schema(implementation = CakeDTO.class))}),
 			@ApiResponse(responseCode = "404", description = "Cake not found",
 					content = @Content)})
-	public void deleteCake(@PathVariable Long id) {
+	public void deleteCake(@PathVariable long id) {
 		cakeService.delete(id);
 	}
 }

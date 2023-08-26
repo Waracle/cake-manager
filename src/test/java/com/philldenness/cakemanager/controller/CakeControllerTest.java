@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -41,7 +44,7 @@ class CakeControllerTest {
 	// region cake by id
 	@Test
 	void shouldCallServiceWithPathIdAndReturnCakeDto() {
-		Long cakeId = 1L;
+		long cakeId = 1L;
 		CakeDTO expectedCake = mock(CakeDTO.class);
 		when(cakeService.getCakeById(cakeId)).thenReturn(expectedCake);
 
@@ -83,7 +86,7 @@ class CakeControllerTest {
 	// region update cake
 	@Test
 	void shouldCallUpdateWithCakePayload() {
-		Long id = 1L;
+		long id = 1L;
 		CakeDTO expectedCake = mock(CakeDTO.class);
 		CakeRequest payloadCake = mock(CakeRequest.class);
 		when(cakeService.update(anyLong(), any(CakeRequest.class))).thenReturn(expectedCake);
@@ -105,7 +108,7 @@ class CakeControllerTest {
 	// region delete cake
 	@Test
 	void shouldCallDeleteWithId() {
-		Long id = 1L;
+		long id = 1L;
 		cakeController.deleteCake(id);
 
 		verify(cakeService).delete(id);

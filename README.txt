@@ -25,38 +25,6 @@ Bonus points:
 * Continuous Integration via any cloud CI system
 * Containerisation
 
-Scope
-* Only the API and related code is in scope. No GUI of any kind is required
-
-
-Original Project Info
-=====================
-
-To run a server locally execute the following command:
-
-`mvn jetty:run`
-
-and access the following URL:
-
-`http://localhost:8282/`
-
-Feel free to change how the project is run, but clear instructions must be given in README
-You can use any IDE you like, so long as the project can build and run with Maven or Gradle.
-
-The project loads some pre-defined data in to an in-memory database, which is acceptable for this exercise.  There is
-no need to create persistent storage.
-
-
-Submission
-==========
-
-Please provide your version of this project as a git repository (e.g. Github, BitBucket, etc).
-
-A fork of this repo, or a Pull Request would be suitable.
-
-Good luck!
-
-
 Notes from Phill
 ==========
 
