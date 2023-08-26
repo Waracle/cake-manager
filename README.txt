@@ -62,12 +62,18 @@ Notes from Phill
 
 Requires Java 20 to run and requires lombok annotations to be enabled on intelliJ.
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
-Flyway migration scripts run automatically on startup
+Flyway migration scripts run automatically on startup.
+
+CICD
+Github actions workflow is setup to automatically test and build the docker container. Then it is pushed to dockerhub which can be viewed here: https://hub.docker.com/r/phillipdenness1/cakemanager
 
 Starting app
-Using docker
-Build the container ` docker build --tag java-docker .  `
-Run the container `docker run --publish 8080:8080 java-docker`
+Pull from dockerhub
+docker run --publish 8080:8080 phillipdenness1/cakemanager:latest
+
+Build and run docker
+Build the container `docker build --tag cakemanagerpd . `
+Run the container `docker run --publish 8080:8080 cakemanagerpd`
 
 Using docker-compose
 run docker compose `docker-compose up`
@@ -80,3 +86,4 @@ Swagger is on http://localhost:8080/swagger-ui/index.html
 
 Next steps:
 Add pagination and sorting to getAll endpoint
+Extend CICD to deploy to cloud

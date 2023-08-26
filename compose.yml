@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: java-docker
+    container_name: cakemanagerpd
     build: .
     ports:
       - 8080:8080
