@@ -60,12 +60,22 @@ Good luck!
 Notes from Phill
 ==========
 
-Requires Java 20 to run.
-If running in intelliJ it requires lombok annotations to be enabled.
+Requires Java 20 to run and requires lombok annotations to be enabled on intelliJ.
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
 Flyway migration scripts run automatically on startup
 
-Build with integration tests command: mvn verify -Pfailsafe
+Starting app
+Using docker
+Build the container ` docker build --tag java-docker .  `
+Run the container `docker run --publish 8080:8080 java-docker`
+
+Using docker-compose
+run docker compose `docker-compose up`
+
+Using mvn
+run `mvn spring-boot:run`
+
+Documentation
 Swagger is on http://localhost:8080/swagger-ui/index.html
 
 Next steps:
