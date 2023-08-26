@@ -19,6 +19,7 @@ public class GetCakeIT {
 	@Autowired
 	private MockMvc mvc;
 
+	// region get all
 	@Test
 	void testGetCakesReturnsAllCakes() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/cakes")
@@ -26,7 +27,9 @@ public class GetCakeIT {
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(20));
 	}
+	// endregion
 
+	// region get by id
 	@Test
 	void testGetCakeById() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/cakes/1")
@@ -36,9 +39,17 @@ public class GetCakeIT {
 	}
 
 	@Test
-	void testGetCakeByIdReturns404WhenIddOESNTeXIST() throws Exception {
+	void testGetCakeByIdReturns404WhenIdDoesntExist() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/cakes/99")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}
+
+	@Test
+	void testGetCakeByIdReturns400WhenIdIsNotALong() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/cakes/abc")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest());
+	}
+	// endregion
 }

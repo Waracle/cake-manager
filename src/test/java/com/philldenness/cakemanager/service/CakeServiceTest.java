@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.philldenness.cakemanager.dto.CakeDTO;
+import com.philldenness.cakemanager.dto.CakeRequest;
 import com.philldenness.cakemanager.entity.CakeEntity;
 import com.philldenness.cakemanager.mapper.CakeMapper;
 import com.philldenness.cakemanager.repository.CakeRepository;
@@ -82,5 +83,24 @@ class CakeServiceTest {
 		assertThrows(IllegalArgumentException.class, () -> cakeService.getCakeById(9L));
 	}
 
+	// endregion
+
+	// region create cake
+	@Test
+	void shouldPassDtoToMapper() {
+		CakeEntity cakeEntity = mock(CakeEntity.class);
+		CakeEntity savedEntity = mock(CakeEntity.class);
+		CakeRequest toSave = mock(CakeRequest.class);
+		CakeDTO fromEntity = mock(CakeDTO.class);
+
+		when(cakeMapper.toEntity(toSave)).thenReturn(cakeEntity);
+		when(cakeRepository.save(cakeEntity)).thenReturn(savedEntity);
+		when(cakeMapper.toDTO(savedEntity)).thenReturn(fromEntity);
+
+		CakeDTO savedCake = cakeService.create(toSave);
+
+		verify(cakeRepository).save(cakeEntity);
+		assertEquals(fromEntity, savedCake);
+	}
 	// endregion
 }
