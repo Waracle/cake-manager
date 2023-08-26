@@ -1,6 +1,8 @@
 package com.philldenness.cakemanager.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -22,8 +24,9 @@ class CakeControllerTest {
 	@InjectMocks
 	private CakeController cakeController;
 
+	// region allCakes
 	@Test
-	void shouldGetCakeReturnsCakesFromCakeService() {
+	void shouldReturnAllCakesFromCakeService() {
 		List<CakeDTO> cakes = List.of(new CakeDTO("title", "description", "image"));
 		when(cakeService.getCakes()).thenReturn(cakes);
 
@@ -31,4 +34,26 @@ class CakeControllerTest {
 
 		assertEquals(cakes, cakeList);
 	}
+	// endregion
+
+	// region cake by id
+	@Test
+	void shouldCallServiceWithPathIdAndReturnCakeDto() {
+		Long cakeId = 1L;
+		CakeDTO expectedCake = new CakeDTO("title", "description", "image");
+		when(cakeService.getCakeById(cakeId)).thenReturn(expectedCake);
+
+		CakeDTO cakeDTO = cakeController.getCakeById(cakeId);
+
+		assertEquals(expectedCake, cakeDTO);
+	}
+
+	@Test
+	void shouldThrowIllegalArgumentExceptionWhenServiceThrowsIllegalArgumentException() {
+		when(cakeService.getCakeById(anyLong())).thenThrow(IllegalArgumentException.class);
+
+		assertThrows(IllegalArgumentException.class, () -> cakeController.getCakeById(9L));
+	}
+
+	// endregion
 }

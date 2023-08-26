@@ -3,6 +3,7 @@ package com.philldenness.cakemanager.service;
 import java.util.List;
 
 import com.philldenness.cakemanager.dto.CakeDTO;
+import com.philldenness.cakemanager.entity.CakeEntity;
 import com.philldenness.cakemanager.mapper.CakeMapper;
 import com.philldenness.cakemanager.repository.CakeRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,10 @@ public class CakeService {
 
 	public List<CakeDTO> getCakes() {
 		return repository.findAll().stream().map(cakeMapper::toDTO).toList();
+	}
+
+	public CakeDTO getCakeById(Long id) {
+		CakeEntity cakeEntity = repository.findById(id).orElseThrow(IllegalArgumentException::new);
+		return cakeMapper.toDTO(cakeEntity);
 	}
 }

@@ -1,8 +1,8 @@
 package com.philldenness.cakemanager.integrationTest;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.philldenness.cakemanager.repository.CakeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,14 +19,26 @@ public class GetCakeIT {
 	@Autowired
 	private MockMvc mvc;
 
-	@Autowired
-	private CakeRepository cakeRepository;
-
 	@Test
 	void testGetCakesReturnsAllCakes() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/cakes")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(20));
+	}
+
+	@Test
+	void testGetCakeById() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/cakes/1")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json("{'title': 'Lemon cheesecake', 'description':  'A cheesecake made of lemon', 'image': 'https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg'}"));
+	}
+
+	@Test
+	void testGetCakeByIdReturns404WhenIddOESNTeXIST() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/cakes/99")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
 	}
 }
