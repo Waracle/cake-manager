@@ -28,13 +28,15 @@ Bonus points:
 ---
 Notes from Phill
 ==========
-<p align="center">
+## Contents
+<p>
   <a href="#CICD">CICD</a> •
   <a href="#starting-app">Starting app</a> •
   <a href="#documentation">Documentation</a> •
   <a href="#next-steps">Next steps</a>
 </p>
 
+## Methodology
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
 
 
@@ -72,8 +74,11 @@ mvn spring-boot:run
 ```
 ---
 ## Documentation
-Swagger documentation
+
+### Swagger documentation
  - http://localhost:8080/swagger-ui/index.html
+### Postman export
+ - postman.cakemanager.json
 
 ## Monitoring
 * Logback with Logstash encoder to support searchable logs
@@ -84,3 +89,4 @@ Swagger documentation
 ## Next steps
 * Add pagination and sorting to getAll endpoint
 * Extend CICD to deploy to cloud
+* Authentication and Authorisation
