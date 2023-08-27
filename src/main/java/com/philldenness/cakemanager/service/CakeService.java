@@ -8,6 +8,8 @@ import com.philldenness.cakemanager.dto.CakeDTO;
 import com.philldenness.cakemanager.dto.CakeRequest;
 import com.philldenness.cakemanager.entity.CakeEntity;
 import com.philldenness.cakemanager.mapper.CakeMapper;
+import com.philldenness.cakemanager.metrics.CounterManager;
+import com.philldenness.cakemanager.metrics.CounterName;
 import com.philldenness.cakemanager.repository.CakeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class CakeService {
 	private final CakeRepository repository;
 	private final CakeMapper mapper;
+	private final CounterManager counterManager;
 
 	public List<CakeDTO> getCakes() {
+		counterManager.increment(CounterName.FIND_ALL_COUNTER);
 		return repository.findAll().stream().map(mapper::toDTO).toList();
 	}
 
@@ -30,12 +34,14 @@ public class CakeService {
 			log.warn("Unknown cake ID", keyValue("cakeId", id));
 			return new IllegalArgumentException();
 		});
+		counterManager.increment(CounterName.FIND_BY_ID_COUNTER);
 		return mapper.toDTO(cakeEntity);
 	}
 
 	public CakeDTO create(CakeRequest toSave) {
 		CakeEntity cakeEntity = mapper.toEntity(toSave);
 		CakeEntity savedEntity = repository.save(cakeEntity);
+		counterManager.increment(CounterName.SAVE);
 		return mapper.toDTO(savedEntity);
 	}
 
@@ -48,6 +54,7 @@ public class CakeService {
 		CakeEntity newPartialEntity = mapper.toEntity(toSave);
 		newPartialEntity.setId(oldEntity.getId());
 
+		counterManager.increment(CounterName.UPDATE);
 		return mapper.toDTO(repository.save(newPartialEntity));
 	}
 
@@ -57,6 +64,7 @@ public class CakeService {
 			log.warn("Could not find cake to delete", keyValue("cakeId", id));
 			throw new IllegalArgumentException();
 		}
+		counterManager.increment(CounterName.DELETE);
 		repository.deleteById(id);
 	}
 }

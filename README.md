@@ -25,33 +25,62 @@ Bonus points:
 * Continuous Integration via any cloud CI system
 * Containerisation
 
+---
 Notes from Phill
 ==========
+<p align="center">
+  <a href="#CICD">CICD</a> •
+  <a href="#starting-app">Starting app</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#next-steps">Next steps</a>
+</p>
 
-Requires Java 20 to run and requires lombok annotations to be enabled on intelliJ.
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
-Flyway migration scripts run automatically on startup.
 
-CICD
-Github actions workflow is setup to automatically test and build the docker container. Then it is pushed to dockerhub which can be viewed here: https://hub.docker.com/r/phillipdenness1/cakemanager
 
-Starting app
-Pull from dockerhub
+## CICD
+* Github actions workflow is setup to automatically test and build the docker container. Then it is pushed to dockerhub which can be viewed here: https://hub.docker.com/r/phillipdenness1/cakemanager
+* Flyway migration scripts run automatically on startup.
+
+---
+## Starting app
+
+Choose 1 method below:
+### Using docker-compose
+```bash
+# run docker compose 
+docker-compose up
+```
+#### OR
+### Pull from dockerhub
+```bash
 docker run --publish 8080:8080 phillipdenness1/cakemanager:latest
+```
+#### OR
+### Build and run docker
+```bash
+# Build the container
+docker build --tag cakemanagerpd .
+# Run the container
+docker run --publish 8080:8080 cakemanagerpd
+```
+#### OR
 
-Build and run docker
-Build the container `docker build --tag cakemanagerpd . `
-Run the container `docker run --publish 8080:8080 cakemanagerpd`
+### mvn
+```bash
+mvn spring-boot:run
+```
+---
+## Documentation
+Swagger documentation
+ - http://localhost:8080/swagger-ui/index.html
 
-Using docker-compose
-run docker compose `docker-compose up`
+## Monitoring
+* Logback with Logstash encoder to support searchable logs
+* Prometheus is available when running via docker-compose. 
+  - Prometheus UI: http://localhost:9090/targets?search=
+  - find_all_counter_total, find_by_id_counter_total, save_counter_total, update_counter_total, delete_counter_total, unknown_error_counter_total, bad_request_counter_total
 
-Using mvn
-run `mvn spring-boot:run`
-
-Documentation
-Swagger is on http://localhost:8080/swagger-ui/index.html
-
-Next steps:
-Add pagination and sorting to getAll endpoint
-Extend CICD to deploy to cloud
+## Next steps
+* Add pagination and sorting to getAll endpoint
+* Extend CICD to deploy to cloud
