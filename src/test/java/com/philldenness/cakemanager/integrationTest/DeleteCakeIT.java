@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 public class DeleteCakeIT {
 
 	@Autowired
@@ -30,14 +32,14 @@ public class DeleteCakeIT {
 		cakeEntity.setDescription("to delete");
 		CakeEntity deleteEntity = cakeRepository.save(cakeEntity);
 
-		mvc.perform(MockMvcRequestBuilders.delete("/cakes/" + deleteEntity.getId())
+		mvc.perform(MockMvcRequestBuilders.delete("/api/cakes/" + deleteEntity.getId())
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 	}
 
 	@Test
 	void testDeleteNonExistentCake() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.delete("/cakes/99")
+		mvc.perform(MockMvcRequestBuilders.delete("/api/cakes/99")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}

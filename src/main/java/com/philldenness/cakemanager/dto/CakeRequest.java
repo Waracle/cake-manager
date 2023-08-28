@@ -1,10 +1,10 @@
 package com.philldenness.cakemanager.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record CakeRequest(
-		@NotNull String title,
-		@NotNull String description,
-		@NotNull String image
+		@NotBlank String title,
+		@NotBlank String description,
+		@NotBlank String image
 ) {
 }

@@ -33,16 +33,16 @@ Notes from Phill
   <a href="#CICD">CICD</a> •
   <a href="#starting-app">Starting app</a> •
   <a href="#documentation">Documentation</a> •
+  <a href="#authentication">Authentication</a> •
   <a href="#next-steps">Next steps</a>
 </p>
 
 ## Methodology
 I used TDD and 'The Double Loop' cycle which is described brilliantly here: https://jmauerhan.wordpress.com/talks/double-loop-tdd-bdd-done-right/
 
-
 ## CICD
 * Github actions workflow is setup to automatically test and build the docker container. Then it is pushed to dockerhub which can be viewed here: https://hub.docker.com/r/phillipdenness1/cakemanager
-* Flyway migration scripts run automatically on startup.
+* Flyway migration scripts run automatically on startup and populates the H2 DB with test data.
 
 ---
 ## Starting app
@@ -77,16 +77,22 @@ mvn spring-boot:run
 
 ### Swagger documentation
  - http://localhost:8080/swagger-ui/index.html
+ - Endpoints are validated jakarta.validation annotations
+
 ### Postman export
  - postman.cakemanager.json
 
 ## Monitoring
 * Logback with Logstash encoder to support searchable logs
 * Prometheus is available when running via docker-compose. 
-  - Prometheus UI: http://localhost:9090/targets?search=
+  - Prometheus UI: http://localhost:9090/graph?
   - find_all_counter_total, find_by_id_counter_total, save_counter_total, update_counter_total, delete_counter_total, unknown_error_counter_total, bad_request_counter_total
+
+## Authentication
+* Basic authentication is applied to secure endpoints
+  - Add header: `Authorization: Basic dXNlcjp1c2VyUGFzcw==`
+  - Username=user , password=userPass
 
 ## Next steps
 * Add pagination and sorting to getAll endpoint
 * Extend CICD to deploy to cloud
-* Authentication and Authorisation

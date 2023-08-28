@@ -13,3 +13,6 @@ scrape_configs:
     static_configs:
       - targets:
           - cakemanagerpd:8080
+    basic_auth:
+      username: 'user'
+      password: 'userPass'
