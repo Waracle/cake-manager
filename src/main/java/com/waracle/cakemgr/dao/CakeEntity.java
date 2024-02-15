@@ -1,11 +1,16 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.dao;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
 @Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
 public class CakeEntity implements Serializable {
 

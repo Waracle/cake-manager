@@ -1,11 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.2</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
   <groupId>com.waracle</groupId>
   <artifactId>cake-manager</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>cake-manager Maven Webapp</name>
+  <version>2.0-SNAPSHOT</version>
+  <name>cake-manager Spring Boot App</name>
   <url>http://maven.apache.org</url>
 
 	<properties>
@@ -13,70 +20,65 @@
 		<!-- maven.compiler.release>${java.version}</maven.compiler.release -->
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<jetty.jvmArgs>--add-opens java.base/java.lang=ALL-UNNAMED</jetty.jvmArgs>
 	</properties>
 
-  <dependencies>
-      <!-- Servlet -->
-      <dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-          <version>3.1.0</version>
-      </dependency>
-
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
       <!-- JSON -->
+      <!-- 
       <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-core</artifactId>
           <version>2.16.1</version>
       </dependency>
+      -->
 
       <!-- JPA -->
+      <!-- 
       <dependency>
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate-entitymanager</artifactId>
           <version>4.3.6.Final</version>
       </dependency>
+      -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-      <!-- In-memory database -->
-      <dependency>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-          <version>2.7.2</version>
-      </dependency>
-
-      <!-- Test dependencies. -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.1</version>
-      <scope>test</scope>
-    </dependency>
-
-  </dependencies>
-  <build>
-    <finalName>cake-manager</finalName>
-    <plugins>
-
+	<build>
+		<plugins>
         <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.12.1</version>
         </plugin>
-
-        <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <version>10.0.20</version>
-            <configuration>
-                <scanIntervalSeconds>10</scanIntervalSeconds>
-                <stopKey>STOP</stopKey>
-                <stopPort>8005</stopPort>
-                <httpConnector>
-                    <port>8282</port>
-                </httpConnector>
-            </configuration>
-        </plugin>
-
-    </plugins>
-  </build>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
