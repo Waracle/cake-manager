@@ -12,14 +12,15 @@
   <groupId>com.waracle</groupId>
   <artifactId>cake-manager</artifactId>
   <version>2.0-SNAPSHOT</version>
-  <name>cake-manager Spring Boot App</name>
+  <name>Cake Manager</name>
   <url>http://maven.apache.org</url>
 
 	<properties>
-		<java.version>11</java.version>
-		<!-- maven.compiler.release>${java.version}</maven.compiler.release -->
+		<java.version>17</java.version>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -41,26 +42,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-      <!-- JSON -->
-      <!-- 
-      <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-core</artifactId>
-          <version>2.16.1</version>
-      </dependency>
-      -->
-
-      <!-- JPA -->
-      <!-- 
-      <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-entitymanager</artifactId>
-          <version>4.3.6.Final</version>
-      </dependency>
-      -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -72,9 +60,6 @@
 
 	<build>
 		<plugins>
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-        </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -1,6 +1,8 @@
-package com.waracle.cakemgr.dao;
+package com.waracle.cakemgr.model;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,24 +13,36 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Employee", uniqueConstraints = {@UniqueConstraint(columnNames = "ID"), @UniqueConstraint(columnNames = "EMAIL")})
+@Table(name = "cake", uniqueConstraints = {@UniqueConstraint(columnNames = "id"), @UniqueConstraint(columnNames = "title")})
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = -1798070786993154676L;
 
+    @JsonProperty(index = 4)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
-    private Integer employeeId;
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
+    @JsonProperty(index = 1)
+    @Column(name = "title", unique = true, nullable = false, length = 100)
     private String title;
 
-    @Column(name = "FIRST_NAME", unique = false, nullable = false, length = 100)
+    @JsonProperty(index = 2,value = "desc")
+    @Column(name = "description", unique = false, nullable = false, length = 100)
     private String description;
 
-    @Column(name = "LAST_NAME", unique = false, nullable = false, length = 300)
+    @JsonProperty(index = 3)
+    @Column(name = "image", unique = false, nullable = false, length = 300)
     private String image;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
