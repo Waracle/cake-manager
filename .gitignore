@@ -1,2 +1,13 @@
+# Maven
 /target
+
+# Gradle
+.gradle
+/build
+/out
+
+# IDE
 /.idea
+*.iml
+*.ipr
+*.iws

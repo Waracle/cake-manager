@@ -34,10 +34,9 @@ Original Project Info
 
 To run a server locally execute the following command:
 
-`mvn jetty:run`
+`./gradlew appRun`
 
 and access the following URL:
-
 `http://localhost:8282/`
 
 Feel free to change how the project is run, but clear instructions must be given in README
@@ -55,3 +54,11 @@ Please provide your version of this project as a git repository (e.g. Github, Bi
 A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
+
+
+Extra useful Commands for Reference
+Other useful Gradle commands:
+- Build the project: `./gradlew build`
+- Clean the project: `./gradlew clean`
+- Run tests: `./gradlew test`
+- Create WAR file: `./gradlew war`

@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.gretty' version '4.1.2'
+}
+
+group = 'com.waracle'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Servlet
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    
+    // JSON
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.0'
+    
+    // JPA
+    implementation 'org.hibernate:hibernate-entitymanager:4.3.6.Final'
+    
+    // In-memory database
+    implementation 'org.hsqldb:hsqldb:2.3.4'
+    
+    // Test dependencies
+    testImplementation 'junit:junit:4.1'
+}
+
+gretty {
+    httpPort = 8282
+    contextPath = '/'
+    servletContainer = 'jetty11'
+}
+
+war {
+    archiveFileName = 'cake-manager.war'
+}
