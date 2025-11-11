@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'war'
-    id 'org.gretty' version '4.1.2'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'com.waracle'
@@ -14,28 +14,13 @@ repositories {
 }
 
 dependencies {
-    // Servlet
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    
-    // JSON
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.0'
-    
-    // JPA
-    implementation 'org.hibernate:hibernate-entitymanager:4.3.6.Final'
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
     // In-memory database
-    implementation 'org.hsqldb:hsqldb:2.3.4'
+    runtimeOnly 'org.hsqldb:hsqldb'
     
     // Test dependencies
-    testImplementation 'junit:junit:4.1'
-}
-
-gretty {
-    httpPort = 8282
-    contextPath = '/'
-    servletContainer = 'jetty11'
-}
-
-war {
-    archiveFileName = 'cake-manager.war'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
