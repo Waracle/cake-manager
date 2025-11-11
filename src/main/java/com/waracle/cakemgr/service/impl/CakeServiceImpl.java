@@ -1,32 +1,55 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.waracle.cakemgr.dto.CakeDto;
+import com.waracle.cakemgr.entity.CakeEntity;
+import com.waracle.cakemgr.repository.CakeRepository;
+import com.waracle.cakemgr.service.CakeService;
+import com.waracle.cakemgr.util.CakeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/cakes")
-public class CakeController {
+@Service
+@Transactional
+public class CakeServiceImpl implements CakeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(CakeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CakeServiceImpl.class);
 
     @Autowired
     private CakeRepository cakeRepository;
 
-    @EventListener(ApplicationReadyEvent.class)
+    @Autowired
+    private CakeMapper cakeMapper;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CakeDto> getAllCakes() {
+        return cakeRepository.findAll()
+            .stream()
+            .map(cakeMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public CakeDto createCake(CakeDto cakeDto) {
+        CakeEntity cake = cakeMapper.toEntity(cakeDto);
+        CakeEntity savedCake = cakeRepository.save(cake);
+        return cakeMapper.toDto(savedCake);
+    }
+
+    @Override
     public void loadInitialData() {
         logger.info("Loading initial cake data...");
 
@@ -61,17 +84,4 @@ public class CakeController {
             logger.error("Error loading initial cake data", ex);
         }
     }
-
-    @GetMapping
-    public ResponseEntity<List<CakeEntity>> getAllCakes() {
-        List<CakeEntity> cakes = cakeRepository.findAll();
-        return ResponseEntity.ok(cakes);
-    }
-
-    @PostMapping
-    public ResponseEntity<CakeEntity> createCake(@RequestBody CakeEntity cake) {
-        CakeEntity savedCake = cakeRepository.save(cake);
-        return ResponseEntity.ok(savedCake);
-    }
-
 }

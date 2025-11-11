@@ -1,28 +1,21 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+public class CakeDto {
 
-@Entity
-@Table(name = "cake", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"title", "description", "image"})
-})
-public class CakeEntity implements Serializable {
-
-    private static final long serialVersionUID = -1798070786993154676L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 100)
     private String title;
-
-    @Column(nullable = false, length = 100)
     private String description;
-
-    @Column(nullable = false, length = 300)
     private String image;
+
+    public CakeDto() {
+    }
+
+    public CakeDto(Long id, String title, String description, String image) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
@@ -55,5 +48,4 @@ public class CakeEntity implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-
 }
