@@ -1,12 +1,15 @@
 package com.waracle.cakemgr.exception;
 
-public class CakeNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class CakeNotFoundException extends ResponseStatusException {
 
     public CakeNotFoundException(String message) {
-        super(message);
+        super(HttpStatus.NOT_FOUND, message);
     }
 
     public CakeNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+        super(HttpStatus.NOT_FOUND, message, cause);
     }
 }

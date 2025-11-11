@@ -10,5 +10,7 @@ public interface CakeService {
     
     CakeDto createCake(CakeDto cakeDto);
     
-    void loadInitialData();
+    CakeDto updateCake(Long id, CakeDto cakeDto);
+    
+    void deleteCake(Long id);
 }

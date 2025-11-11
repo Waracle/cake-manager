@@ -1,13 +1,13 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.18'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version '3.2.11'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.waracle'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '21'
+targetCompatibility = '21'
 
 repositories {
     mavenCentral()
@@ -18,9 +18,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
+    // Jakarta Persistence API
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    
+    // OpenAPI/Swagger documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    
     // In-memory database
     runtimeOnly 'org.hsqldb:hsqldb'
     
     // Test dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootRun {
+    mainClass = 'com.waracle.cakemgr.CakeManagerApplication'
 }

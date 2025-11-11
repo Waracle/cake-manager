@@ -1,10 +1,20 @@
 package com.waracle.cakemgr.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Cake data transfer object")
 public class CakeDto {
 
+    @Schema(description = "Unique identifier of the cake", example = "1")
     private Long id;
+    
+    @Schema(description = "Title of the cake", example = "Lemon cheesecake", required = true)
     private String title;
+    
+    @Schema(description = "Description of the cake", example = "A cheesecake made of lemon", required = true)
     private String description;
+    
+    @Schema(description = "Image URL of the cake", example = "https://example.com/cake.jpg", required = true)
     private String image;
 
     public CakeDto() {
