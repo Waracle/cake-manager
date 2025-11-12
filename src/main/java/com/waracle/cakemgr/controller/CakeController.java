@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ public class CakeController {
             @ApiResponse(responseCode = "200", description = "Cake created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input data")
     })
-    public ResponseEntity<CakeDto> createCake(@RequestBody CakeDto cakeDto) {
+    public ResponseEntity<CakeDto> createCake(@Valid @RequestBody CakeDto cakeDto) {
         CakeDto savedCake = cakeService.createCake(cakeDto);
         return ResponseEntity.ok(savedCake);
     }
@@ -49,7 +51,7 @@ public class CakeController {
     })
     public ResponseEntity<CakeDto> updateCake(
             @Parameter(description = "ID of the cake to update") @PathVariable Long id,
-            @RequestBody CakeDto cakeDto) {
+            @Valid @RequestBody CakeDto cakeDto) {
         CakeDto updatedCake = cakeService.updateCake(id, cakeDto);
         return ResponseEntity.ok(updatedCake);
     }

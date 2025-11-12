@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  cake-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cake-manager-app
+    ports:
+      - "8282:8282"
+    environment:
+      # Server Configuration
+      - SERVER_PORT=8282
+      # DataSource Configuration (using in-memory HSQLDB)
+      - SPRING_DATASOURCE_URL=jdbc:hsqldb:mem:cakedb
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.hsqldb.jdbcDriver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      # JPA Configuration
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.HSQLDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8282/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
